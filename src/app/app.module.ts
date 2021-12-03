@@ -5,6 +5,8 @@ import { AppComponent } from './app.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {UserFormComponent} from "./login-page/user-form/user-form.component";
 import {HeaderComponent} from "./common-components/header/header.component";
+import {LoginService} from "./shared/login-service/login.service";
+import {HttpClient, HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -15,9 +17,10 @@ import {HeaderComponent} from "./common-components/header/header.component";
   imports: [
     BrowserModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [LoginService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

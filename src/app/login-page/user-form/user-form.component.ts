@@ -1,5 +1,6 @@
 import {Component, ViewChild} from '@angular/core';
-import {FormControl, FormGroup, NgForm, Validators} from "@angular/forms";
+import {AbstractControl, FormControl, FormGroup, NgForm, Validators} from "@angular/forms";
+import {LoginService} from "../../shared/login-service/login.service";
 
 @Component({
   selector: 'app-user-form',
@@ -21,12 +22,13 @@ export class UserFormComponent {
     "register": new FormControl(false)
   });
 
-  constructor() {
+  constructor(private loginService: LoginService) {
   }
 
 
   onSubmit(): void {
-    console.log(this.signInForm);
+    //console.log(this.signInForm);
+    //this.loginService.sout();
   }
 
   onc(form: NgForm) {
@@ -35,5 +37,14 @@ export class UserFormComponent {
 
   changeRegistrationStatus(): void {
     this.registration = !this.registration;
+  }
+
+  checkErrors(controlName: string): boolean {
+
+    let control: AbstractControl = this.signInForm.get(controlName);
+    if (control != null && control.errors != null) {
+      return true;
+    }
+    return false;
   }
 }

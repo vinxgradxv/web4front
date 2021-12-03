@@ -6,4 +6,7 @@ import {Component} from '@angular/core';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
+  name: string = "Sofya Inglikova";
+  group: string = "P3233";
+  varNum: number = 3356;
 }
