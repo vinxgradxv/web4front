@@ -1,6 +1,9 @@
 import {Component, ViewChild} from '@angular/core';
 import {AbstractControl, FormControl, FormGroup, NgForm, Validators} from "@angular/forms";
 import {LoginService} from "../../shared/login-service/login.service";
+import {User} from "../../shared/data/user";
+import {Observable} from "rxjs";
+import {StatusObject} from "../../shared/data/status-object";
 
 @Component({
   selector: 'app-user-form',
@@ -25,26 +28,31 @@ export class UserFormComponent {
   constructor(private loginService: LoginService) {
   }
 
-
   onSubmit(): void {
-    //console.log(this.signInForm);
-    //this.loginService.sout();
-  }
 
-  onc(form: NgForm) {
-    console.log(form.valid)
-  }
-
-  changeRegistrationStatus(): void {
-    this.registration = !this.registration;
-  }
-
-  checkErrors(controlName: string): boolean {
-
-    let control: AbstractControl = this.signInForm.get(controlName);
-    if (control != null && control.errors != null) {
-      return true;
+    let user: User = {
+      "login": this.signInForm.get("login").value,
+      "password": this.signInForm.get("login").value
     }
-    return false;
+
+    console.log(user);
+
+    if (this.validateUser(user)) {
+      let so: Observable<StatusObject> = this.loginService.sendSignInRequest(user, this.registration);
+      so.subscribe((response: StatusObject) => {
+          console.log(response);
+        },
+        (error) => {
+          console.log(error);
+        }
+      )
+    } else {
+      console.log("Validation failed");
+    }
   }
+
+  validateUser(user: User): boolean {
+    return user.login !== "" && user.password !== "";
+  }
+
 }
