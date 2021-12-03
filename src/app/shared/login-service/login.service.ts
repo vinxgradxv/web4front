@@ -3,13 +3,14 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {User} from "../data/user";
 import {StatusObject} from "../data/status-object";
+import {environment} from "../../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
 
-  private apiServerURL: string = "http://localhost:8080";
+  private apiServerURL: string = environment.apiBaseUrl;
 
   constructor(private http: HttpClient) {
   }

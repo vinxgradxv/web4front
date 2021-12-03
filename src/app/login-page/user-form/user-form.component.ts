@@ -17,8 +17,6 @@ export class UserFormComponent {
   registerLabel: string = "register";
   submitButtonLabel: string = "Submit";
 
-  registration: boolean = false;
-
   signInForm: FormGroup = new FormGroup({
     "login": new FormControl(null, Validators.required),
     "password": new FormControl(null, Validators.required),
@@ -38,7 +36,7 @@ export class UserFormComponent {
     console.log(user);
 
     if (this.validateUser(user)) {
-      let so: Observable<StatusObject> = this.loginService.sendSignInRequest(user, this.registration);
+      let so: Observable<StatusObject> = this.loginService.sendSignInRequest(user, this.signInForm.get("register").value);
       so.subscribe((response: StatusObject) => {
           console.log(response);
         },
