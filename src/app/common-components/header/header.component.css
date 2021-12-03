@@ -1,0 +1,40 @@
+.container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.floating-areas {
+  display: inline-block;
+  vertical-align: top;
+  overflow: hidden;
+}
+
+.coloured-block {
+  text-align: center;
+  background-color: #3a3e40;
+  padding: 1rem;
+  font-size: 1rem;
+  font-family: 'Roboto', sans-serif;
+}
+
+.coloured-block > span {
+  color: #f6fafb;
+}
+
+#head-area {
+  width: 80%;
+  /*margin-left: 7%;*/
+  margin-bottom: 2rem;
+  margin-top: 1rem;
+  border-radius: 1rem;
+}
+
+.left-aligned {
+  float:left;
+}
+
+.right-aligned {
+  float:right;
+}
