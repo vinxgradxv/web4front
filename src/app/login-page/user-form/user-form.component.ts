@@ -30,7 +30,7 @@ export class UserFormComponent {
 
     let user: User = {
       "login": this.signInForm.get("login").value,
-      "password": this.signInForm.get("login").value
+      "password": this.signInForm.get("password").value
     }
 
     console.log(user);

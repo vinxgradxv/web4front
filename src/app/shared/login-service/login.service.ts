@@ -16,9 +16,9 @@ export class LoginService {
   }
   sendSignInRequest(user: User, register: boolean):Observable<StatusObject> {
     console.log(register);
-    console.log(`${this.apiServerURL}/user/register`);
-    if (register) return this.http.post<StatusObject>(`${this.apiServerURL}/user/register`, user);
-    return this.http.post<StatusObject>(`${this.apiServerURL}/user/login`, user);
+    console.log(`${this.apiServerURL}/api/register`);
+    if (register) return this.http.post<StatusObject>(`${this.apiServerURL}/api/register`, user);
+    return this.http.post<StatusObject>(`${this.apiServerURL}/api/auth`, user);
   }
 
 }
