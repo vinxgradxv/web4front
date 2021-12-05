@@ -1,0 +1,43 @@
+<div class="container">
+  <div id="entry-form-container">
+    <form id="entry-form" [formGroup]="entryForm" (ngSubmit)="onSubmit()">
+
+      <div id="x-block" class="form-blocks">
+        <label for="x-group">X</label>
+        <div id="x-group" class="radio-container">
+          <ng-template ngFor let-item [ngForOf]="x_r_values">
+            <div>
+              <input type="radio" value={{item}} name="x" id="x{{item}}">
+              <label for="x{{item}}">{{item}}</label>
+            </div>
+          </ng-template>
+        </div>
+      </div>
+
+      <div id="y-block" class="form-blocks">
+        <input type="text"
+               [placeholder]="yPlaceholder">
+      </div>
+
+      <div id="r-block" class="form-blocks">
+        <label for="r-group">R</label>
+        <div id="r-group" class="radio-container">
+          <ng-template ngFor let-item [ngForOf]="x_r_values">
+            <div>
+              <input type="radio" value={{item}} name="r" id="r{{item}}">
+              <label for="r{{item}}">{{item}}</label>
+            </div>
+          </ng-template>
+        </div>
+      </div>
+
+      <div id="button-block" class="form-blocks">
+        <input type="submit" class="form-buttons" id="submit-button"
+               [value]="submitButtonLabel">
+        <input type="reset" class="form-buttons" id="reset-button"
+               [value]="resetButtonLabel">
+      </div>
+    </form>
+  </div>
+
+</div>

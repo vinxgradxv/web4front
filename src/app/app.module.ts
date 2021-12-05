@@ -7,12 +7,14 @@ import {UserFormComponent} from "./login-page/user-form/user-form.component";
 import {HeaderComponent} from "./common-components/header/header.component";
 import {LoginService} from "./shared/login-service/login.service";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
+import {EntryFormComponent} from "./main-page/entry-form/entry-form.component";
 
 @NgModule({
   declarations: [
     AppComponent,
     UserFormComponent,
-    HeaderComponent
+    HeaderComponent,
+    EntryFormComponent
   ],
   imports: [
     BrowserModule,
