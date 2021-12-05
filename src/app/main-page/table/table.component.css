@@ -7,7 +7,7 @@
 
 #table-scroll-container {
   overflow-y: scroll;
-  min-height: 516px;
+  min-height: 518px;
 }
 
 #result-table {
@@ -15,6 +15,7 @@
   text-align: center;
   border-collapse: collapse;
   border: .3rem solid #E9EFF6;
+  border-right: 0;
   font-size: medium;
   font-family: 'Roboto', sans-serif;
 }
