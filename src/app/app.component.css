@@ -1,1 +1,17 @@
+#left-area {
+  width: 40%;
+  margin-left: 5%;
+  margin-right: 1rem;
+}
 
+.floating-areas {
+  display: inline-block;
+  vertical-align: top;
+  overflow: hidden;
+}
+
+#header {
+  /*justify-content: center;*/
+  /*background-color: red;*/
+  /*display: inline-block;*/
+}

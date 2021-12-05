@@ -8,13 +8,16 @@ import {HeaderComponent} from "./common-components/header/header.component";
 import {LoginService} from "./shared/login-service/login.service";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {EntryFormComponent} from "./main-page/entry-form/entry-form.component";
+import {GraphComponent} from "./main-page/graph/graph.component";
 
 @NgModule({
   declarations: [
     AppComponent,
     UserFormComponent,
     HeaderComponent,
-    EntryFormComponent
+    EntryFormComponent,
+    GraphComponent
+
   ],
   imports: [
     BrowserModule,
