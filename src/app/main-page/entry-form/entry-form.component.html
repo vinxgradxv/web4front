@@ -7,7 +7,7 @@
         <div id="x-group" class="radio-container">
           <ng-template ngFor let-item [ngForOf]="x_r_values">
             <div>
-              <input type="radio" value={{item}} name="x" id="x{{item}}">
+              <input type="radio" value={{item}} name="x" formControlName="x" id="x{{item}}">
               <label for="x{{item}}">{{item}}</label>
             </div>
           </ng-template>
@@ -15,7 +15,8 @@
       </div>
 
       <div id="y-block" class="form-blocks">
-        <input type="text"
+        <input type="text" (keydown)="inputFilter($event)"
+               formControlName="y"
                [placeholder]="yPlaceholder">
       </div>
 
@@ -24,7 +25,7 @@
         <div id="r-group" class="radio-container">
           <ng-template ngFor let-item [ngForOf]="x_r_values">
             <div>
-              <input type="radio" value={{item}} name="r" id="r{{item}}">
+              <input type="radio" value={{item}} name="r" formControlName="r" id="r{{item}}">
               <label for="r{{item}}">{{item}}</label>
             </div>
           </ng-template>
@@ -32,7 +33,7 @@
       </div>
 
       <div id="button-block" class="form-blocks">
-        <input type="submit" class="form-buttons" id="submit-button"
+        <input type="submit" class="form-buttons" id="submit-button" (click)="submit()"
                [value]="submitButtonLabel">
         <input type="reset" class="form-buttons" id="reset-button"
                [value]="resetButtonLabel">

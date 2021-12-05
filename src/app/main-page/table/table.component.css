@@ -1,0 +1,37 @@
+#table-container {
+  padding: 2rem;
+  margin: 1rem;
+  border-radius: 1rem;
+  background-color: #370f54;
+}
+
+#table-scroll-container {
+  overflow-y: scroll;
+  min-height: 516px;
+}
+
+#result-table {
+  width: 100%;
+  text-align: center;
+  border-collapse: collapse;
+  border: .3rem solid #E9EFF6;
+  font-size: medium;
+  font-family: 'Roboto', sans-serif;
+}
+
+table th {
+  color: #f69a73;
+  font-size: large;
+}
+
+table tr {
+  color: #E9EFF6;
+}
+
+table tbody tr:hover{
+  background: #663399FF;
+}
+#table-header:hover th {
+  background: #f69a73;
+  color: #370f54;
+}

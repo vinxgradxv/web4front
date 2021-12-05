@@ -9,6 +9,7 @@ import {LoginService} from "./shared/login-service/login.service";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {EntryFormComponent} from "./main-page/entry-form/entry-form.component";
 import {GraphComponent} from "./main-page/graph/graph.component";
+import {TableComponent} from "./main-page/table/table.component";
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import {GraphComponent} from "./main-page/graph/graph.component";
     UserFormComponent,
     HeaderComponent,
     EntryFormComponent,
-    GraphComponent
+    GraphComponent,
+    TableComponent
 
   ],
   imports: [
