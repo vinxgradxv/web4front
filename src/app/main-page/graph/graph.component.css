@@ -41,7 +41,7 @@ svg line {
 
 svg path, svg polygon {
   stroke: #d87d56;
-  fill: #f69a73;
+  fill: #d87d56;
   fill-opacity: 0.5;
 }
 
