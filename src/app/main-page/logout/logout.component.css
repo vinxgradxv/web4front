@@ -1,0 +1,20 @@
+#logout-container {
+  /*float: right;*/
+  padding: 1rem;
+  margin: 1rem;
+  border-radius: 1rem;
+  overflow: auto;
+  background-color: #370f54;
+  text-align: center;
+  font-size: 1rem;
+  font-family: 'Roboto', sans-serif;
+  /*width: 55%;*/
+}
+
+a {
+  color: #E9EFF6;
+}
+
+#logout-container:hover {
+  background-color: #f69a73;
+}

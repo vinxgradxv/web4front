@@ -1,9 +1,10 @@
 import {Component, ViewChild} from '@angular/core';
 import {AbstractControl, FormControl, FormGroup, NgForm, Validators} from "@angular/forms";
-import {LoginService} from "../../shared/login-service/login.service";
+import {AuthService} from "../../shared/auth-service/auth.service";
 import {User} from "../../shared/data/user";
 import {Observable} from "rxjs";
 import {StatusObject} from "../../shared/data/status-object";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-user-form',
@@ -23,7 +24,13 @@ export class UserFormComponent {
     "register": new FormControl(false)
   });
 
-  constructor(private loginService: LoginService) {
+  constructor(private authService: AuthService,
+              private router: Router,
+              private route: ActivatedRoute) {
+
+    // if (this.authService.getStatusObject && this.authService.getStatusObject.success) {
+    //   this.router.navigate(['/']);
+    // }
   }
 
   onSubmit(): void {
@@ -36,14 +43,18 @@ export class UserFormComponent {
     console.log(user);
 
     if (this.validateUser(user)) {
-      let so: Observable<StatusObject> = this.loginService.sendSignInRequest(user, this.signInForm.get("register").value);
-      so.subscribe((response: StatusObject) => {
-          console.log(response);
-        },
-        (error) => {
-          console.log(error);
+      let so: Observable<StatusObject> = this.authService.logIn(user, this.signInForm.get("register").value);
+      so.subscribe({
+          next: (response: StatusObject) => {
+            console.log(response)
+            const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+            this.router.navigate([returnUrl]);
+          },
+          error: (error: any) => {
+            console.log(error)
+          }
         }
-      )
+      );
     } else {
       console.log("Validation failed");
     }

@@ -2,7 +2,7 @@
   <div id="user-form-container">
     <form id="user-form" [formGroup]="signInForm" (ngSubmit)="onSubmit()">
       <input type="text"
-             [placeholder]="loginPlaceholder"
+             placeholder="{{loginPlaceholder}}"
              formControlName="login">
       <input type="password"
              [placeholder]="passwordPlaceholder"

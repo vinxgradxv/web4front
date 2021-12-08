@@ -8,7 +8,8 @@
 #user-form-container {
   align-items: center;
   display: flex;
-  background-color: #663399FF;
+  /*background-color: #663399FF;*/
+  background-color: #f69a73;
   width: 80%;
   /*margin-left: 7%;*/
   justify-content: center;

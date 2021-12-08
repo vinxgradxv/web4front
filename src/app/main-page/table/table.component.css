@@ -7,7 +7,7 @@
 
 #table-scroll-container {
   overflow-y: scroll;
-  min-height: 518px;
+  min-height: 450px;
 }
 
 #result-table {

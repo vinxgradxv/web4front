@@ -5,11 +5,14 @@ import { AppComponent } from './app.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {UserFormComponent} from "./login-page/user-form/user-form.component";
 import {HeaderComponent} from "./common-components/header/header.component";
-import {LoginService} from "./shared/login-service/login.service";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {EntryFormComponent} from "./main-page/entry-form/entry-form.component";
 import {GraphComponent} from "./main-page/graph/graph.component";
 import {TableComponent} from "./main-page/table/table.component";
+import {MainComponent} from "./main-page/main/main.component";
+import {RouterModule} from "@angular/router";
+import {AppRoutingModule} from "./app-routing.module";
+import {LogoutComponent} from "./main-page/logout/logout.component";
 
 @NgModule({
   declarations: [
@@ -18,14 +21,17 @@ import {TableComponent} from "./main-page/table/table.component";
     HeaderComponent,
     EntryFormComponent,
     GraphComponent,
-    TableComponent
+    TableComponent,
+    MainComponent,
+    LogoutComponent
 
   ],
   imports: [
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
