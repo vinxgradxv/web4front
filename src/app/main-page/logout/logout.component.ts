@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {Router} from "@angular/router";
-import {AuthService} from "../../shared/auth-service/auth.service";
+import {AuthService} from "../../shared/auth-util/auth.service";
 
 @Component({
   selector: 'app-logout',
@@ -9,10 +9,14 @@ import {AuthService} from "../../shared/auth-service/auth.service";
 })
 export class LogoutComponent {
 
+  userName: string;
+  logOutLabel: string = "Log out";
+
   constructor(
     private router: Router,
     private authenticationService: AuthService
   ) {
+    this.userName = authenticationService.getStatusObject.name;
   }
 
   logout() {

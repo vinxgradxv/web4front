@@ -28,15 +28,12 @@ export class AuthService {
   }
 
   sendSignInRequest(user: User, register: boolean): Observable<StatusObject> {
-    //console.log(register);
-    //console.log(`${this.apiServerURL}/api/register`);
-    if (register) return this.http.post<StatusObject>(`${this.apiServerURL}/api/register`, user);
-    return this.http.post<StatusObject>(`${this.apiServerURL}/api/auth`, user);
+    if (register) return this.http.post<StatusObject>(`${this.apiServerURL}/user/register`, user);
+    return this.http.post<StatusObject>(`${this.apiServerURL}/user/auth`, user);
   }
 
   logIn(user: User, register: boolean) {
     let result: Observable<StatusObject> = this.sendSignInRequest(user, register);
-    //this.statusObjectObservable = result;
     return result.pipe(map(statusObj => {
       localStorage.setItem("statusObject", JSON.stringify(statusObj));
       this.statusObject.next(statusObj);

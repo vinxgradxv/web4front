@@ -1,4 +1,7 @@
 import {Component} from "@angular/core";
+import {EntryService} from "../../shared/entry-util/entry.service";
+import {Entry} from "../../shared/data/entry";
+import {Point} from "../../shared/data/point";
 
 @Component({
   selector: 'app-graph',
@@ -7,9 +10,14 @@ import {Component} from "@angular/core";
 })
 export class GraphComponent {
 
-  svgHeight: number = 272;//240;
-  svgWidth: number = 340;//300;
+  svgHeight: number = 240;
+  svgWidth: number = 300;
   hwRelation: number = 0.8;
+  points: Point[];
+
+  constructor(private entryService: EntryService) {
+    this.entryService.graph = this;
+  }
 
   yAxisArrowCalc(): string {
     //arrow scaling
@@ -46,6 +54,24 @@ export class GraphComponent {
     return "" + (this.svgWidth / 2) + "," + (this.svgHeight / 2) + " "
       + (this.svgWidth / 2) + "," + (this.svgHeight / 2 + this.svgWidth / 6) + " "
       + (this.svgWidth / 2 - this.svgWidth / 6) + "," + (this.svgHeight / 2);
+  }
+
+  drawPoints(values: Entry[]): void {
+    this.points = [];
+    values.forEach((value: Entry) => {
+      let {absoluteX, absoluteY} = this.getAbsoluteOffsetFromXYCoords(value.x, value.y, value.r);
+      this.points.push({cx:absoluteX, cy:absoluteY, fill:"white"})
+    })
+    console.log(this.points);
+  }
+
+  private getAbsoluteOffsetFromXYCoords(x, y, r) {
+    let relativeX = x * 100 / r;
+    let relativeY = y * 100 / r;
+    return {
+      absoluteX: this.svgWidth/2 + Math.round(relativeX),
+      absoluteY: this.svgHeight/2 - Math.round(relativeY)
+    }
   }
 
 }

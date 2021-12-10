@@ -83,7 +83,8 @@ label {
 }
 
 .form-buttons:hover {
-  background: #d87d56;
+  /*background: #d87d56;*/
+  background-color: rebeccapurple;
 }
 
 .form-blocks > label {

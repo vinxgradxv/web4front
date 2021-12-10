@@ -84,6 +84,8 @@
 
         <circle r="0" [attr.cx]="svgWidth/2" [attr.cy]="svgHeight/2" id="dot" fill="#866fd7"/>
 
+        <circle r="3" *ngFor="let point of points" [attr.cx]="point.cx" [attr.cy]="point.cy" [attr.fill]="point.fill"/>
+
       </svg>
     </div>
 <!--  </div>-->

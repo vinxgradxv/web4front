@@ -1,5 +1,7 @@
 import {Component} from "@angular/core";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {EntryService} from "../../shared/entry-util/entry.service";
+import {AuthService} from "../../shared/auth-util/auth.service";
 
 @Component({
   selector: 'app-entry-form',
@@ -12,6 +14,10 @@ export class EntryFormComponent {
   submitButtonLabel: string = "Submit";
   resetButtonLabel: string = "Reset";
 
+  constructor(private entryService: EntryService, private authService: AuthService) {
+    // this.entryService.entryForm = this;
+  }
+
   x_r_values: Array<string> = ["-4", "-3", "-2", "-1", "0", "1", "2", "3", "4"];
 
   entryForm: FormGroup = new FormGroup({
@@ -21,12 +27,17 @@ export class EntryFormComponent {
   });
 
   onSubmit() {
-
+    this.entryService.addEntry({
+      x: this.entryForm.get("x").value,
+      y: this.entryForm.get("y").value,
+      r: this.entryForm.get("r").value,
+      userName: (this.authService.getStatusObject != null) ? (this.authService.getStatusObject.name) : null
+    })
   }
 
-  submit(): void {
-    console.log(this.entryForm);
-  }
+  // submit(): void {
+  //   console.log(this.entryForm);
+  // }
 
   inputFilter(event: KeyboardEvent) {
     let test = /[0-9.,\-+]/.test(event.key);

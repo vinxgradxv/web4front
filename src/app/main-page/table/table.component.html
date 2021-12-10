@@ -10,11 +10,11 @@
       </tr>
       </thead>
       <tbody>
-      <tr>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>true</td>
+      <tr *ngFor="let entry of entries">
+        <td>{{entry.x}}</td>
+        <td>{{entry.y}}</td>
+        <td>{{entry.r}}</td>
+        <td>{{entry.hit}}</td>
       </tr>
       </tbody>
     </table>

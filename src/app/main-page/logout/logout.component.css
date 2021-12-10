@@ -8,13 +8,28 @@
   text-align: center;
   font-size: 1rem;
   font-family: 'Roboto', sans-serif;
-  /*width: 55%;*/
+  width: 55%;
 }
 
-a {
-  color: #E9EFF6;
+input[type="button"] {
+  margin-top: .3rem;
+  background: #f69a73;
+  color:  #f6fafb;
+  width: 50%;
+  padding: 0 1rem;
+  margin-bottom: .3rem;
+  line-height: 2rem;
+  border-radius: 1rem;
+  border-color: #370f54;
+  border-width: .1rem;
+  display: inline-block;
 }
 
-#logout-container:hover {
-  background-color: #f69a73;
+input[type="button"]:hover {
+  /*background: #d87d56;*/
+  background-color: rebeccapurple;
+}
+
+#logout-container span {
+  color: #f69a73;
 }
