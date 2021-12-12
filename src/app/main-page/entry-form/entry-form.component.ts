@@ -68,4 +68,8 @@ export class EntryFormComponent implements OnInit {
     //console.log(this.entryForm.get("r").value);
     this.entryService.graph.redrawDots(this.entryForm.get("r").value);
   }
+
+  clearAll() {
+    this.entryService.clearAllEntries();
+  }
 }

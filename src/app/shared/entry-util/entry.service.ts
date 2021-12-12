@@ -80,6 +80,19 @@ export class EntryService implements OnInit {
     );
   }
 
+  clearAllEntries() {
+    return this.http.post<Entry[]>(`${environment.apiBaseUrl}/api/clear`, JSON.parse(localStorage.getItem('statusObject'))).subscribe(
+      {
+        next: (values: Entry[]) => {
+          console.log("clear");
+          this.entries.next(values);
+          console.log(values.length);
+          this.graph.clearPoints();
+          }
+      }
+    );
+  }
+
   ngOnInit() {
     this.getAllEntries();
   }

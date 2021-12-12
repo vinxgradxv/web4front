@@ -118,7 +118,12 @@ export class GraphComponent implements OnInit {
       point.cx = absoluteX;
       point.cy = absoluteY;
     });
+  }
 
+  clearPoints() {
+    this.points = [];
+    this.r = this.entryService.form.entryForm.get("r").value;
+    //console.log("r " + this.r);
   }
 
 
