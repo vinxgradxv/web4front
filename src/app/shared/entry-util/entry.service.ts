@@ -3,7 +3,7 @@ import {EntryFormComponent} from "../../main-page/entry-form/entry-form.componen
 import {GraphComponent} from "../../main-page/graph/graph.component";
 import {TableComponent} from "../../main-page/table/table.component";
 import {HttpClient} from "@angular/common/http";
-import {BehaviorSubject} from "rxjs";
+import {BehaviorSubject, Observable} from "rxjs";
 import {StatusObject} from "../data/status-object";
 import {RawEntry} from "../data/raw-entry";
 import {Entry} from "../data/entry";
@@ -13,8 +13,7 @@ import {AuthService} from "../auth-util/auth.service";
 @Injectable({
   providedIn: 'root'
 })
-export class EntryService implements OnInit {
-
+export class EntryService {
 
   private _graph: GraphComponent;
   private _table: TableComponent;
@@ -57,23 +56,29 @@ export class EntryService implements OnInit {
           if (values.length != 0) {
             let lastEntry = values.pop();
             values.push(lastEntry);
-            this.graph.drawPoints(values, lastEntry.r);
+            // this.graph.drawPoints(values, lastEntry.r);
+            this.graph.drawDots(lastEntry.r);
           }
         }
       }
     );
   }
 
+  private getAll(): Observable<Entry[]> {
+    return this.http.post<Entry[]>(`${environment.apiBaseUrl}/api/get-all`, JSON.parse(localStorage.getItem('statusObject')));
+  }
+
   getAllEntries() {
-    return this.http.post<Entry[]>(`${environment.apiBaseUrl}/api/get-all`, JSON.parse(localStorage.getItem('statusObject'))).subscribe(
+    return this.getAll().subscribe(
       {
         next: (values: Entry[]) => {
           this.entries.next(values);
-          console.log(values.length);
+          console.log("get all");
           if (values.length != 0) {
             let lastEntry = values.pop();
             values.push(lastEntry);
-            this.graph.drawPoints(values, lastEntry.r);
+            // this.graph.drawPoints(values, lastEntry.r);
+            this.graph.drawDots(lastEntry.r);
           }
         }
       }
@@ -88,12 +93,41 @@ export class EntryService implements OnInit {
           this.entries.next(values);
           console.log(values.length);
           this.graph.clearPoints();
-          }
+        }
       }
     );
   }
 
-  ngOnInit() {
-    this.getAllEntries();
+  getInitEntries() {
+    return this.getAll().subscribe({
+      next: (values: Entry[]) => {
+        this.entries.next(values);
+        console.log("get all init");
+        if (values.length != 0) {
+          let lastEntry = values.pop();
+          this.form.entryForm.get("r").setValue(lastEntry.r);
+          values.push(lastEntry);
+          //this.graph.drawPoints(values, lastEntry.r);
+          this.graph.drawDots(lastEntry.r);
+        }
+      }
+    })
+    // if (this.entries.value.length > 0) {
+    //     let lastVal = this.entries.value.pop();
+    //     this.entries.value.push(lastVal);
+    //     this.form.entryForm.get("r").setValue(lastVal.r);
+    //     console.log("done");
+    //   }
   }
+
+  // ngOnInit() {
+  //   // this.getAllEntries();
+  //   console.log("here" + (this.entries.value.length > 0) );
+  //   // if (this.entries.value.length > 0) {
+  //   //   let lastVal = this.entries.value.pop();
+  //   //   this.entries.value.push(lastVal);
+  //   //   this.form.entryForm.get("r").setValue(lastVal.r);
+  //   //   console.log("done");
+  //   // }
+  // }
 }

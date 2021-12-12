@@ -20,7 +20,6 @@ export class EntryFormComponent implements OnInit {
   }
 
   ngOnInit() {
-
   }
 
   x_r_values: Array<string> = ["-4", "-3", "-2", "-1", "0", "1", "2", "3", "4"];
@@ -52,9 +51,18 @@ export class EntryFormComponent implements OnInit {
     }
   }
 
-  // submit(): void {
-  //   console.log(this.entryForm);
-  // }
+
+  xValidate(x: number) {
+    return true;
+  }
+
+  yValidate(y: number) {
+    return (y<=3) && (y>=-3);
+  }
+
+  rValidate(r: number) {
+    return r>0;
+  }
 
   inputFilter(event: KeyboardEvent) {
     let test = /[0-9.,\-+]/.test(event.key);
@@ -65,11 +73,17 @@ export class EntryFormComponent implements OnInit {
   }
 
   rChanged() {
-    //console.log(this.entryForm.get("r").value);
-    this.entryService.graph.redrawDots(this.entryForm.get("r").value);
+    if (this.rValidate(this.entryForm.get("r").value)) {
+      //this.entryService.graph.redrawDots(this.entryForm.get("r").value);
+      this.entryService.graph.drawDots(this.entryForm.get("r").value);
+    } else {console.log("Invalid R! Graph cannot be redrawn")}
   }
 
   clearAll() {
     this.entryService.clearAllEntries();
+  }
+
+  rMatches(item: string) {
+    return this.entryForm.get('r').value == parseFloat(item);
   }
 }

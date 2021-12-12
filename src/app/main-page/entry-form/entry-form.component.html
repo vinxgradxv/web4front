@@ -25,7 +25,8 @@
         <div id="r-group" class="radio-container">
           <ng-template ngFor let-item [ngForOf]="x_r_values">
             <div>
-              <input type="radio" value={{item}} name="r" formControlName="r" id="r{{item}}" (change)="rChanged()">
+              <input type="radio" value={{item}} name="r" formControlName="r" id="r{{item}}" (change)="rChanged()"
+                     [checked]="rMatches(item)">
               <label for="r{{item}}">{{item}}</label>
             </div>
           </ng-template>

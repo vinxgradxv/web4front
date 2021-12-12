@@ -91,6 +91,7 @@ label {
   color: #f69a73;
 }
 
-.ng-invalid.ng-submitted  {
+/*.ng-invalid.ng-submitted  {*/
+.ng-invalid {
   border: 3px solid #a94442; /* red */
 }

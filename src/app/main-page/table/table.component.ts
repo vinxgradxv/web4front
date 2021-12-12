@@ -22,9 +22,8 @@ export class TableComponent implements OnInit {
   ngOnInit() {
     this.entryService.entries.subscribe(value => {
       this.entries = value;
-      // console.log(this.entries);
     });
-    this.entryService.getAllEntries();
+    this.entryService.getInitEntries();
   }
 }
 

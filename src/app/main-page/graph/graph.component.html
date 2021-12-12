@@ -53,24 +53,24 @@
               [attr.y2]="svgHeight/2 + 2*svgWidth/6"/>
         <!--        <line class="coor-line" x1="145" x2="155" y1="220" y2="220"/>-->
 
-        <text class="coor-text svg-element" [attr.x]="4*svgWidth/6 - 5" [attr.y]="svgHeight/2+20">R/2</text>
+        <text class="coor-text svg-element" [attr.x]="4*svgWidth/6 - 5" [attr.y]="svgHeight/2+20">{{(r!=null)? r/2: "R/2"}}</text>
         <!--        <text class="coor-text div" x="195" y="140">R/2</text>-->
-        <text class="coor-text svg-element" [attr.x]="5*svgWidth/6 - 2" [attr.y]="svgHeight/2+20">R</text>
+        <text class="coor-text svg-element" [attr.x]="5*svgWidth/6 - 2" [attr.y]="svgHeight/2+20">{{(r!=null)? r: "R"}}</text>
         <!--        <text class="coor-text" x="248" y="140">R</text>-->
 
-        <text class="coor-text svg-element" [attr.x]="svgWidth/6 - 10" [attr.y]="svgHeight/2+20">-R</text>
+        <text class="coor-text svg-element" [attr.x]="svgWidth/6 - 10" [attr.y]="svgHeight/2+20">{{(r!=null)? -r: "-R"}}</text>
         <!--        <text class="coor-text neg" x="40" y="140">-R</text>-->
-        <text class="coor-text svg-element" [attr.x]="2*svgWidth/6 - 10" [attr.y]="svgHeight/2+20">-R/2</text>
+        <text class="coor-text svg-element" [attr.x]="2*svgWidth/6 - 10" [attr.y]="svgHeight/2+20">{{(r!=null)? -r/2: "-R/2"}}</text>
         <!--        <text class="coor-text div neg" x="90" y="140">-R/2</text>-->
 
-        <text class="coor-text svg-element" [attr.x]="3*svgWidth/6 + 10" [attr.y]="svgHeight/2 - svgWidth/6 + 5">R/2</text>
+        <text class="coor-text svg-element" [attr.x]="3*svgWidth/6 + 10" [attr.y]="svgHeight/2 - svgWidth/6 + 5">{{(r!=null)? r/2: "R/2"}}</text>
         <!--        <text class="coor-text div" x="160" y="75">R/2</text>-->
-        <text class="coor-text svg-element" [attr.x]="3*svgWidth/6 + 10" [attr.y]="svgHeight/2 - 2*svgWidth/6 + 5">R</text>
+        <text class="coor-text svg-element" [attr.x]="3*svgWidth/6 + 10" [attr.y]="svgHeight/2 - 2*svgWidth/6 + 5">{{(r!=null)? r: "R"}}</text>
         <!--        <text class="coor-text" x="160" y="25">R</text>-->
 
-        <text class="coor-text svg-element" [attr.x]="3*svgWidth/6 + 10" [attr.y]="svgHeight/2 + svgWidth/6 + 5">-R/2</text>
+        <text class="coor-text svg-element" [attr.x]="3*svgWidth/6 + 10" [attr.y]="svgHeight/2 + svgWidth/6 + 5">{{(r!=null)? -r/2: "-R/2"}}</text>
         <!--        <text class="coor-text div neg" x="160" y="175">-R/2</text>-->
-        <text class="coor-text svg-element" [attr.x]="3*svgWidth/6 + 10" [attr.y]="svgHeight/2 + 2*svgWidth/6 + 5">-R</text>
+        <text class="coor-text svg-element" [attr.x]="3*svgWidth/6 + 10" [attr.y]="svgHeight/2 + 2*svgWidth/6 + 5">{{(r!=null)? -r: "-R"}}</text>
         <!--        <text class="coor-text neg" x="160" y="225">-R</text>-->
 
         <polygon class="svg-figure rectangle svg-element" [attr.points]="rectangleCoordsCalc()"/>

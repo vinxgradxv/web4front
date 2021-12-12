@@ -13,8 +13,12 @@ export class GraphComponent implements OnInit {
 
   svgHeight: number = 240;
   svgWidth: number = 300;
-  points: Point[];
-  r:number;
+  points: Point[] = [];
+  r: number;
+
+  curHitColor: string = "#34f5e5";
+  curMissColor: string = "#f6f30a";
+  otherColor: string = "#d84aee";
 
   constructor(private entryService: EntryService) {
     this.entryService.graph = this;
@@ -60,15 +64,21 @@ export class GraphComponent implements OnInit {
       + (this.svgWidth / 2 - this.svgWidth / 6) + "," + (this.svgHeight / 2);
   }
 
-  drawPoints(values: Entry[], r:number): void {
-    this.points = [];
-    this.r = r;
-    console.log(r);
-    values.forEach((value: Entry) => {
-      let {absoluteX, absoluteY} = this.getAbsoluteOffsetFromXYCoords(value.x, value.y, this.r);
-      this.points.push({x:value.x, y:value.y, cx: absoluteX, cy: absoluteY, fill: "white"})
-    });
-    console.log(this.points);
+  // drawPoints(values: Entry[], r: number): void {
+  //   this.points = [];
+  //   this.r = r;
+  //   // console.log(r);
+  //   values.forEach((value: Entry) => {
+  //     let {absoluteX, absoluteY} = this.getAbsoluteOffsetFromXYCoords(value.x, value.y, this.r);
+  //     let fill = this.calcPointColor(value.r, this.r, value.hit);
+  //     // this.points.push({x: value.x, y: value.y, r: value.r, hit: value.hit, cx: absoluteX, cy: absoluteY, fill: fill});
+  //     this.points.push({x: value.x, y: value.y, cx: absoluteX, cy: absoluteY, fill: fill});
+  //   });
+  //   // console.log(this.points);
+  // }
+
+  calcPointColor(pointR: number, currR: number, hit: boolean) {
+    return (pointR != currR) ? this.otherColor : ((hit) ? this.curHitColor : this.curMissColor);
   }
 
   private getAbsoluteOffsetFromXYCoords(x, y, r) {
@@ -96,7 +106,6 @@ export class GraphComponent implements OnInit {
     if (belongs) {
       if (this.r != null) {
         let {x, y} = this.getXYCoordsFromAbsoluteOffset(event.offsetX, event.offsetY, this.r);
-        console.log(x, y);
         this.entryService.addEntry({
           x: x,
           y: y,
@@ -110,15 +119,22 @@ export class GraphComponent implements OnInit {
   }
 
 
-
-  redrawDots(r: number) {
+  drawDots(r: number) {
+    this.points = [];
     this.r = r;
-    this.points.forEach(point => {
-      let {absoluteX, absoluteY} = this.getAbsoluteOffsetFromXYCoords(point.x, point.y, this.r);
-      point.cx = absoluteX;
-      point.cy = absoluteY;
+    this.entryService.entries.value.forEach((value: Entry) => {
+      let {absoluteX, absoluteY} = this.getAbsoluteOffsetFromXYCoords(value.x, value.y, this.r);
+      let fill = this.calcPointColor(value.r, this.r, value.hit);
+      // this.points.push({x: value.x, y: value.y, r: value.r, hit: value.hit, cx: absoluteX, cy: absoluteY, fill: fill});
+      this.points.push({x: value.x, y: value.y, cx: absoluteX, cy: absoluteY, fill: fill});
     });
   }
+    // this.points.forEach(point => {
+    //   let {absoluteX, absoluteY} = this.getAbsoluteOffsetFromXYCoords(point.x, point.y, this.r);
+    //   point.cx = absoluteX;
+    //   point.cy = absoluteY;
+    //   point.fill = this.calcPointColor(point.r, this.r, point.hit);
+    // });
 
   clearPoints() {
     this.points = [];
