@@ -1,22 +1,26 @@
-import {Component} from "@angular/core";
+import {Component, OnInit} from "@angular/core";
 import {EntryService} from "../../shared/entry-util/entry.service";
 import {Entry} from "../../shared/data/entry";
 import {Point} from "../../shared/data/point";
+import {StatusObject} from "../../shared/data/status-object";
 
 @Component({
   selector: 'app-graph',
   templateUrl: './graph.component.html',
   styleUrls: ['./graph.component.css']
 })
-export class GraphComponent {
+export class GraphComponent implements OnInit {
 
   svgHeight: number = 240;
   svgWidth: number = 300;
-  hwRelation: number = 0.8;
   points: Point[];
+  r:number;
 
   constructor(private entryService: EntryService) {
     this.entryService.graph = this;
+  }
+
+  ngOnInit() {
   }
 
   yAxisArrowCalc(): string {
@@ -56,12 +60,14 @@ export class GraphComponent {
       + (this.svgWidth / 2 - this.svgWidth / 6) + "," + (this.svgHeight / 2);
   }
 
-  drawPoints(values: Entry[]): void {
+  drawPoints(values: Entry[], r:number): void {
     this.points = [];
+    this.r = r;
+    console.log(r);
     values.forEach((value: Entry) => {
-      let {absoluteX, absoluteY} = this.getAbsoluteOffsetFromXYCoords(value.x, value.y, value.r);
-      this.points.push({cx:absoluteX, cy:absoluteY, fill:"white"})
-    })
+      let {absoluteX, absoluteY} = this.getAbsoluteOffsetFromXYCoords(value.x, value.y, this.r);
+      this.points.push({x:value.x, y:value.y, cx: absoluteX, cy: absoluteY, fill: "white"})
+    });
     console.log(this.points);
   }
 
@@ -69,9 +75,51 @@ export class GraphComponent {
     let relativeX = x * 100 / r;
     let relativeY = y * 100 / r;
     return {
-      absoluteX: this.svgWidth/2 + Math.round(relativeX),
-      absoluteY: this.svgHeight/2 - Math.round(relativeY)
+      absoluteX: this.svgWidth / 2 + Math.round(relativeX),
+      absoluteY: this.svgHeight / 2 - Math.round(relativeY)
     }
   }
+
+  private getXYCoordsFromAbsoluteOffset(absoluteXOffset, absoluteYOffset, r) {
+    return {
+      x: Math.round(((absoluteXOffset - this.svgWidth / 2) * r / 100) * 1000) / 1000,
+      y: Math.round(((this.svgHeight / 2 - absoluteYOffset) * r / 100) * 1000) / 1000
+    }
+  }
+
+  getDotCoords(event: MouseEvent) {
+
+    // console.log(event.offsetX, event.offsetY);
+    //     // console.log(event.target);
+    //     // console.log(event);
+    let belongs = (<Element>event.target).classList.contains("svg-element");
+    if (belongs) {
+      if (this.r != null) {
+        let {x, y} = this.getXYCoordsFromAbsoluteOffset(event.offsetX, event.offsetY, this.r);
+        console.log(x, y);
+        this.entryService.addEntry({
+          x: x,
+          y: y,
+          r: this.r,
+          userName: (<StatusObject>JSON.parse(localStorage.getItem("statusObject"))).name
+        });
+      } else {
+        console.log("R undefined!")
+      }
+    }
+  }
+
+
+
+  redrawDots(r: number) {
+    this.r = r;
+    this.points.forEach(point => {
+      let {absoluteX, absoluteY} = this.getAbsoluteOffsetFromXYCoords(point.x, point.y, this.r);
+      point.cx = absoluteX;
+      point.cy = absoluteY;
+    });
+
+  }
+
 
 }

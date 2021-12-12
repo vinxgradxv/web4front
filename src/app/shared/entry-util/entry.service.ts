@@ -15,12 +15,22 @@ import {AuthService} from "../auth-util/auth.service";
 })
 export class EntryService implements OnInit {
 
+
   private _graph: GraphComponent;
   private _table: TableComponent;
+  private _form: EntryFormComponent;
 
   public entries: BehaviorSubject<Entry[]> = new BehaviorSubject<Entry[]>([]);
 
-  constructor(private http: HttpClient, private authService: AuthService) {
+  constructor(private http: HttpClient) {
+  }
+
+  get form(): EntryFormComponent {
+    return this._form;
+  }
+
+  set form(value: EntryFormComponent) {
+    this._form = value;
   }
 
   get graph(): GraphComponent {
@@ -44,18 +54,27 @@ export class EntryService implements OnInit {
       {
         next: (values: Entry[]) => {
           this.entries.next(values);
-          this.graph.drawPoints(values);
+          if (values.length != 0) {
+            let lastEntry = values.pop();
+            values.push(lastEntry);
+            this.graph.drawPoints(values, lastEntry.r);
+          }
         }
       }
     );
   }
 
   getAllEntries() {
-    return this.http.post<Entry[]>(`${environment.apiBaseUrl}/api/get-all`, this.authService.getStatusObject).subscribe(
+    return this.http.post<Entry[]>(`${environment.apiBaseUrl}/api/get-all`, JSON.parse(localStorage.getItem('statusObject'))).subscribe(
       {
         next: (values: Entry[]) => {
           this.entries.next(values);
-          this.graph.drawPoints(values);
+          console.log(values.length);
+          if (values.length != 0) {
+            let lastEntry = values.pop();
+            values.push(lastEntry);
+            this.graph.drawPoints(values, lastEntry.r);
+          }
         }
       }
     );

@@ -90,3 +90,7 @@ label {
 .form-blocks > label {
   color: #f69a73;
 }
+
+.ng-invalid.ng-submitted  {
+  border: 3px solid #a94442; /* red */
+}

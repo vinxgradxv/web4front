@@ -15,13 +15,14 @@ export class TableComponent implements OnInit {
   hitColumnLabel: string = "Hit result";
   entries: Entry[];
 
-  constructor(private entryService: EntryService, private authService: AuthService) {
+  constructor(private entryService: EntryService) {
     this.entryService.table = this;
   }
 
   ngOnInit() {
     this.entryService.entries.subscribe(value => {
-      this.entries = value
+      this.entries = value;
+      // console.log(this.entries);
     });
     this.entryService.getAllEntries();
   }

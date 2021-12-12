@@ -10,7 +10,6 @@ import {EntryFormComponent} from "./main-page/entry-form/entry-form.component";
 import {GraphComponent} from "./main-page/graph/graph.component";
 import {TableComponent} from "./main-page/table/table.component";
 import {MainComponent} from "./main-page/main/main.component";
-import {RouterModule} from "@angular/router";
 import {AppRoutingModule} from "./app-routing.module";
 import {LogoutComponent} from "./main-page/logout/logout.component";
 import {EntryService} from "./shared/entry-util/entry.service";

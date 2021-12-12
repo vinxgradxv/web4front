@@ -1,90 +1,90 @@
 <!--<div class="container">-->
 <!--  <div id="graph-container">-->
-    <div id="graph-plane">
-      <svg [attr.width]="svgWidth" [attr.height]="svgHeight" id="graph-svg" class="svg-graph"
+    <div id="graph-plane" (click)="getDotCoords($event)">
+      <svg [attr.width]="svgWidth" [attr.height]="svgHeight" id="graph-svg" class="svg-graph svg-element"
            xmlns="http://www.w3.org/2000/svg">
 
-        <line class="axis" x1="0" [attr.x2]="svgWidth" [attr.y1]="svgHeight/2" [attr.y2]="svgHeight/2"/>
-        <line class="axis" [attr.x1]="svgWidth/2" [attr.x2]="svgWidth/2" y1="0" [attr.y2]="svgWidth"/>
-        <polygon class="axis-arrows" [attr.points]="yAxisArrowCalc()"/>
-        <polygon class="axis-arrows" [attr.points]="xAxisArrowCalc()"/>
+        <line class="axis svg-element" x1="0" [attr.x2]="svgWidth" [attr.y1]="svgHeight/2" [attr.y2]="svgHeight/2"/>
+        <line class="axis svg-element" [attr.x1]="svgWidth/2" [attr.x2]="svgWidth/2" y1="0" [attr.y2]="svgWidth"/>
+        <polygon class="axis-arrows svg-element" [attr.points]="yAxisArrowCalc()"/>
+        <polygon class="axis-arrows svg-element" [attr.points]="xAxisArrowCalc()"/>
 
-        <line class="coor-line" [attr.x1]="4*svgWidth/6"
+        <line class="coor-line svg-element" [attr.x1]="4*svgWidth/6"
               [attr.x2]="4*svgWidth/6"
               [attr.y1]="svgHeight/2-5"
               [attr.y2]="svgHeight/2+5"/>
         <!--        <line class="coor-line" x1="200" x2="200" y1="115" y2="125"/>-->
-        <line class="coor-line" [attr.x1]="5*svgWidth/6"
+        <line class="coor-line svg-element" [attr.x1]="5*svgWidth/6"
               [attr.x2]="5*svgWidth/6"
               [attr.y1]="svgHeight/2-5"
               [attr.y2]="svgHeight/2+5"/>
         <!--        <line class="coor-line" x1="250" x2="250" y1="115" y2="125"/>-->
 
-        <line class="coor-line" [attr.x1]="svgWidth/6"
+        <line class="coor-line svg-element" [attr.x1]="svgWidth/6"
               [attr.x2]="svgWidth/6"
               [attr.y1]="svgHeight/2-5"
               [attr.y2]="svgHeight/2+5"/>
         <!--        <line class="coor-line" x1="50" x2="50" y1="115" y2="125"/>-->
-        <line class="coor-line" [attr.x1]="2*svgWidth/6"
+        <line class="coor-line svg-element" [attr.x1]="2*svgWidth/6"
               [attr.x2]="2*svgWidth/6"
               [attr.y1]="svgHeight/2-5"
               [attr.y2]="svgHeight/2+5"/>
         <!--        <line class="coor-line" x1="100" x2="100" y1="115" y2="125"/>-->
 
-        <line class="coor-line" [attr.x1]="svgWidth/2 - 5"
+        <line class="coor-line svg-element" [attr.x1]="svgWidth/2 - 5"
               [attr.x2]="svgWidth/2 + 5"
               [attr.y1]="svgHeight/2 - 2*svgWidth/6"
               [attr.y2]="svgHeight/2 - 2*svgWidth/6"/>
         <!--        <line class="coor-line" x1="145" x2="155" y1="20" y2="20"/>-->
-        <line class="coor-line" [attr.x1]="svgWidth/2 - 5"
+        <line class="coor-line svg-element" [attr.x1]="svgWidth/2 - 5"
               [attr.x2]="svgWidth/2 + 5"
               [attr.y1]="svgHeight/2 - svgWidth/6"
               [attr.y2]="svgHeight/2 - svgWidth/6"/>
         <!--        <line class="coor-line" x1="145" x2="155" y1="70" y2="70"/>-->
 
-        <line class="coor-line" [attr.x1]="svgWidth/2 - 5"
+        <line class="coor-line svg-element" [attr.x1]="svgWidth/2 - 5"
               [attr.x2]="svgWidth/2 + 5"
               [attr.y1]="svgHeight/2 + svgWidth/6"
               [attr.y2]="svgHeight/2 + svgWidth/6"/>
         <!--        <line class="coor-line" x1="145" x2="155" y1="170" y2="170"/>-->
-        <line class="coor-line" [attr.x1]="svgWidth/2 - 5"
+        <line class="coor-line svg-element" [attr.x1]="svgWidth/2 - 5"
               [attr.x2]="svgWidth/2 + 5"
               [attr.y1]="svgHeight/2 + 2*svgWidth/6"
               [attr.y2]="svgHeight/2 + 2*svgWidth/6"/>
         <!--        <line class="coor-line" x1="145" x2="155" y1="220" y2="220"/>-->
 
-        <text class="coor-text div" [attr.x]="4*svgWidth/6 - 5" [attr.y]="svgHeight/2+20">R/2</text>
+        <text class="coor-text svg-element" [attr.x]="4*svgWidth/6 - 5" [attr.y]="svgHeight/2+20">R/2</text>
         <!--        <text class="coor-text div" x="195" y="140">R/2</text>-->
-        <text class="coor-text div" [attr.x]="5*svgWidth/6 - 2" [attr.y]="svgHeight/2+20">R</text>
+        <text class="coor-text svg-element" [attr.x]="5*svgWidth/6 - 2" [attr.y]="svgHeight/2+20">R</text>
         <!--        <text class="coor-text" x="248" y="140">R</text>-->
 
-        <text class="coor-text div" [attr.x]="svgWidth/6 - 10" [attr.y]="svgHeight/2+20">-R</text>
+        <text class="coor-text svg-element" [attr.x]="svgWidth/6 - 10" [attr.y]="svgHeight/2+20">-R</text>
         <!--        <text class="coor-text neg" x="40" y="140">-R</text>-->
-        <text class="coor-text div" [attr.x]="2*svgWidth/6 - 10" [attr.y]="svgHeight/2+20">-R/2</text>
+        <text class="coor-text svg-element" [attr.x]="2*svgWidth/6 - 10" [attr.y]="svgHeight/2+20">-R/2</text>
         <!--        <text class="coor-text div neg" x="90" y="140">-R/2</text>-->
 
-        <text class="coor-text div" [attr.x]="3*svgWidth/6 + 10" [attr.y]="svgHeight/2 - svgWidth/6 + 5">R/2</text>
+        <text class="coor-text svg-element" [attr.x]="3*svgWidth/6 + 10" [attr.y]="svgHeight/2 - svgWidth/6 + 5">R/2</text>
         <!--        <text class="coor-text div" x="160" y="75">R/2</text>-->
-        <text class="coor-text div" [attr.x]="3*svgWidth/6 + 10" [attr.y]="svgHeight/2 - 2*svgWidth/6 + 5">R</text>
+        <text class="coor-text svg-element" [attr.x]="3*svgWidth/6 + 10" [attr.y]="svgHeight/2 - 2*svgWidth/6 + 5">R</text>
         <!--        <text class="coor-text" x="160" y="25">R</text>-->
 
-        <text class="coor-text div" [attr.x]="3*svgWidth/6 + 10" [attr.y]="svgHeight/2 + svgWidth/6 + 5">-R/2</text>
+        <text class="coor-text svg-element" [attr.x]="3*svgWidth/6 + 10" [attr.y]="svgHeight/2 + svgWidth/6 + 5">-R/2</text>
         <!--        <text class="coor-text div neg" x="160" y="175">-R/2</text>-->
-        <text class="coor-text div" [attr.x]="3*svgWidth/6 + 10" [attr.y]="svgHeight/2 + 2*svgWidth/6 + 5">-R</text>
+        <text class="coor-text svg-element" [attr.x]="3*svgWidth/6 + 10" [attr.y]="svgHeight/2 + 2*svgWidth/6 + 5">-R</text>
         <!--        <text class="coor-text neg" x="160" y="225">-R</text>-->
 
-        <polygon class="svg-figure rectangle" [attr.points]="rectangleCoordsCalc()"/>
+        <polygon class="svg-figure rectangle svg-element" [attr.points]="rectangleCoordsCalc()"/>
 <!--        <polygon class="svg-figure rectangle" points="150,170 150,120 50,120, 50,170"/>-->
 
-        <path class="svg-figure circle" [attr.d]="circleCoordsCalc()"/>
+        <path class="svg-figure circle svg-element" [attr.d]="circleCoordsCalc()"/>
 <!--        <path class="svg-figure circle" d="M 150 70 A 50 50 0 0 1 200 120 V 120 H 150"/>-->
 
-        <polygon class="svg-figure triangle" [attr.points]="triangleCoordsCalc()"/>
+        <polygon class="svg-figure triangle svg-element" [attr.points]="triangleCoordsCalc()"/>
 <!--        <polygon class="svg-figure triangle" points="150,120 250,120 150,170"/>-->
 
-        <circle r="0" [attr.cx]="svgWidth/2" [attr.cy]="svgHeight/2" id="dot" fill="#866fd7"/>
+        <circle class="svg-element" r="0" [attr.cx]="svgWidth/2" [attr.cy]="svgHeight/2" id="dot" fill="#866fd7"/>
 
-        <circle r="3" *ngFor="let point of points" [attr.cx]="point.cx" [attr.cy]="point.cy" [attr.fill]="point.fill"/>
+        <circle class="svg-element" r="3" *ngFor="let point of points" [attr.cx]="point.cx" [attr.cy]="point.cy" [attr.fill]="point.fill"/>
 
       </svg>
     </div>
