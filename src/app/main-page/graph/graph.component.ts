@@ -122,6 +122,7 @@ export class GraphComponent implements OnInit {
   drawDots(r: number) {
     this.points = [];
     this.r = r;
+    console.log("R : "+ this.r);
     this.entryService.entries.value.forEach((value: Entry) => {
       let {absoluteX, absoluteY} = this.getAbsoluteOffsetFromXYCoords(value.x, value.y, this.r);
       let fill = this.calcPointColor(value.r, this.r, value.hit);

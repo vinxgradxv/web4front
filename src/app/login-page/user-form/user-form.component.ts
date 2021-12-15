@@ -17,12 +17,17 @@ export class UserFormComponent {
   passwordPlaceholder: string = "Password";
   registerLabel: string = "register";
   submitButtonLabel: string = "Submit";
+  submitted: boolean = false;
 
   signInForm: FormGroup = new FormGroup({
     "login": new FormControl(null, Validators.required),
     "password": new FormControl(null, Validators.required),
     "register": new FormControl(false)
   });
+  loginMessage: string = "Login required!";
+  passwordMessage: string = "Password required!";
+  resultMessage: string = "Result message";
+  result: boolean = false;
 
   constructor(private authService: AuthService,
               private router: Router,
@@ -35,20 +40,32 @@ export class UserFormComponent {
 
   onSubmit(): void {
 
-    let user: User = {
-      "login": this.signInForm.get("login").value,
-      "password": this.signInForm.get("password").value
-    }
 
-    console.log(user);
 
-    if (this.validateUser(user)) {
+    // console.log(user);
+    this.submitted = true;
+    console.log(this.signInForm);
+    // if (this.validateUser(user)) {
+    if (this.signInForm.valid) {
+      let user: User = {
+        "login": this.signInForm.get("login").value,
+        "password": this.signInForm.get("password").value
+      }
       let so: Observable<StatusObject> = this.authService.logIn(user, this.signInForm.get("register").value);
       so.subscribe({
           next: (response: StatusObject) => {
             console.log(response)
-            const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
-            this.router.navigate([returnUrl]);
+            if (response.success) {
+              const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+              this.router.navigate([returnUrl]);
+            } else {
+              if (this.signInForm.get("register").value == true) {
+                this.resultMessage = "Registration failed: user already exists!";
+              } else {
+                this.resultMessage = "Auth failed: wrong password!"
+              }
+              this.result = true;
+            }
           },
           error: (error: any) => {
             console.log(error)
@@ -60,8 +77,25 @@ export class UserFormComponent {
     }
   }
 
-  validateUser(user: User): boolean {
-    return user.login !== "" && user.password !== "";
+  // validateUser(user: User): boolean {
+  //   return user.login !== " "&& user.login !== null && user.password !== "" && user.password !== null;
+  // }
+
+  passwordErrors() {
+    let errs = this.signInForm.get('password').errors;
+    if (errs) return true;
+    return false;
+  }
+
+  loginErrors() {
+    let errs = this.signInForm.get('login').errors;
+    if (errs) return true;
+    return false;
+  }
+
+  touchField() {
+    this.submitted = false;
+    this.result = false;
   }
 
 }

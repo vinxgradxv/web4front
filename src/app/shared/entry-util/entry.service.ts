@@ -4,11 +4,9 @@ import {GraphComponent} from "../../main-page/graph/graph.component";
 import {TableComponent} from "../../main-page/table/table.component";
 import {HttpClient} from "@angular/common/http";
 import {BehaviorSubject, Observable} from "rxjs";
-import {StatusObject} from "../data/status-object";
 import {RawEntry} from "../data/raw-entry";
 import {Entry} from "../data/entry";
 import {environment} from "../../../environments/environment";
-import {AuthService} from "../auth-util/auth.service";
 
 @Injectable({
   providedIn: 'root'
@@ -52,6 +50,7 @@ export class EntryService {
     return this.http.post<Entry[]>(`${environment.apiBaseUrl}/api/add`, entry).subscribe(
       {
         next: (values: Entry[]) => {
+          values = values.sort((res1, res2) => res1.id - res2.id);
           this.entries.next(values);
           if (values.length != 0) {
             let lastEntry = values.pop();
@@ -72,6 +71,7 @@ export class EntryService {
     return this.getAll().subscribe(
       {
         next: (values: Entry[]) => {
+          values = values.sort((res1, res2) => res1.id - res2.id);
           this.entries.next(values);
           console.log("get all");
           if (values.length != 0) {
@@ -107,27 +107,10 @@ export class EntryService {
           let lastEntry = values.pop();
           this.form.entryForm.get("r").setValue(lastEntry.r);
           values.push(lastEntry);
-          //this.graph.drawPoints(values, lastEntry.r);
           this.graph.drawDots(lastEntry.r);
         }
       }
     })
-    // if (this.entries.value.length > 0) {
-    //     let lastVal = this.entries.value.pop();
-    //     this.entries.value.push(lastVal);
-    //     this.form.entryForm.get("r").setValue(lastVal.r);
-    //     console.log("done");
-    //   }
   }
 
-  // ngOnInit() {
-  //   // this.getAllEntries();
-  //   console.log("here" + (this.entries.value.length > 0) );
-  //   // if (this.entries.value.length > 0) {
-  //   //   let lastVal = this.entries.value.pop();
-  //   //   this.entries.value.push(lastVal);
-  //   //   this.form.entryForm.get("r").setValue(lastVal.r);
-  //   //   console.log("done");
-  //   // }
-  // }
 }
