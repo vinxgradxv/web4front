@@ -1,7 +1,8 @@
 import {Component, OnInit} from "@angular/core";
-import {EntryService} from "../../shared/entry-util/entry.service";
+import {EntryService} from "../../shared/services/entry.service";
 import {Entry} from "../../shared/data/entry";
-import {AuthService} from "../../shared/auth-util/auth.service";
+import {AuthService} from "../../shared/services/auth.service";
+import {InteractionService} from "../../shared/services/interaction.service";
 
 @Component({
   selector: 'app-table',
@@ -15,15 +16,20 @@ export class TableComponent implements OnInit {
   hitColumnLabel: string = "Hit result";
   entries: Entry[];
 
-  constructor(private entryService: EntryService) {
-    this.entryService.table = this;
+  // constructor(private entryService: EntryService) {
+  //   this.entryService.table = this;
+  // }
+
+  constructor(private interactionService: InteractionService) {
+    this.interactionService.table = this;
   }
 
   ngOnInit() {
-    this.entryService.entries.subscribe(value => {
+    this.interactionService.entries.subscribe(value => {
       this.entries = value;
     });
-    this.entryService.getInitEntries();
+    // this.entryService.getInitEntries();
+    this.interactionService.getAllEntries();
   }
 }
 

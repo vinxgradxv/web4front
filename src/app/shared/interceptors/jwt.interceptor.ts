@@ -8,7 +8,7 @@ import {
 import {Injectable} from "@angular/core";
 import {Router} from "@angular/router";
 import {catchError, map, Observable, tap, throwError} from "rxjs";
-import {AuthService} from "../auth-util/auth.service";
+import {AuthService} from "../services/auth.service";
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {

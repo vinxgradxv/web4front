@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {StatusObject} from "./shared/data/status-object";
 import {Router} from "@angular/router";
-import {AuthService} from "./shared/auth-util/auth.service";
+import {AuthService} from "./shared/services/auth.service";
 
 @Component({
   selector: 'app-root',

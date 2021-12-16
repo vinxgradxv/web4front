@@ -1,25 +1,33 @@
-import {Injectable, OnInit} from "@angular/core";
-import {EntryFormComponent} from "../../main-page/entry-form/entry-form.component";
+import {Injectable} from "@angular/core";
+import {EntryService} from "./entry.service";
 import {GraphComponent} from "../../main-page/graph/graph.component";
 import {TableComponent} from "../../main-page/table/table.component";
-import {HttpClient} from "@angular/common/http";
-import {BehaviorSubject, Observable} from "rxjs";
-import {RawEntry} from "../data/raw-entry";
+import {EntryFormComponent} from "../../main-page/entry-form/entry-form.component";
 import {Entry} from "../data/entry";
-import {environment} from "../../../environments/environment";
+import {BehaviorSubject} from "rxjs";
+import {RawEntry} from "../data/raw-entry";
+import {MessagesComponent} from "../../main-page/messages/messages.component";
 
 @Injectable({
   providedIn: 'root'
 })
-export class EntryService {
+export class InteractionService {
 
   private _graph: GraphComponent;
   private _table: TableComponent;
   private _form: EntryFormComponent;
+  private _messages: MessagesComponent;
 
   public entries: BehaviorSubject<Entry[]> = new BehaviorSubject<Entry[]>([]);
 
-  constructor(private http: HttpClient) {
+  private errorHandler = (err) => {
+    console.log("Error while processing request");
+    this.messages.resultMessages = ["Error while processing request"];
+    this.messages.resultError = true;
+    console.log(err)
+  };
+
+  constructor(private entryService: EntryService) {
   }
 
   get form(): EntryFormComponent {
@@ -46,29 +54,17 @@ export class EntryService {
     this._table = value;
   }
 
-  addEntry(entry: RawEntry) {
-    return this.http.post<Entry[]>(`${environment.apiBaseUrl}/api/add`, entry).subscribe(
-      {
-        next: (values: Entry[]) => {
-          values = values.sort((res1, res2) => res1.id - res2.id);
-          this.entries.next(values);
-          if (values.length != 0) {
-            let lastEntry = values.pop();
-            values.push(lastEntry);
-            // this.graph.drawPoints(values, lastEntry.r);
-            this.graph.drawDots(lastEntry.r);
-          }
-        }
-      }
-    );
+  get messages(): MessagesComponent {
+    return this._messages;
   }
 
-  private getAll(): Observable<Entry[]> {
-    return this.http.post<Entry[]>(`${environment.apiBaseUrl}/api/get-all`, JSON.parse(localStorage.getItem('statusObject')));
+  set messages(value: MessagesComponent) {
+    this._messages = value;
   }
+
 
   getAllEntries() {
-    return this.getAll().subscribe(
+    this.entryService.getAll().subscribe(
       {
         next: (values: Entry[]) => {
           values = values.sort((res1, res2) => res1.id - res2.id);
@@ -77,40 +73,41 @@ export class EntryService {
           if (values.length != 0) {
             let lastEntry = values.pop();
             values.push(lastEntry);
-            // this.graph.drawPoints(values, lastEntry.r);
+            this.form.entryForm.get("r").setValue(lastEntry.r);
             this.graph.drawDots(lastEntry.r);
           }
-        }
+        },
+        error: this.errorHandler
+      }
+    );
+  }
+
+  addEntry(entry: RawEntry) {
+    this.entryService.addNewEntry(entry).subscribe(
+      {
+        next: (values: Entry[]) => {
+          values = values.sort((res1, res2) => res1.id - res2.id);
+          this.entries.next(values);
+          if (values.length != 0) {
+            let lastEntry = values.pop();
+            values.push(lastEntry);
+            this.graph.drawDots(lastEntry.r);
+          }
+        },
+        error: this.errorHandler
       }
     );
   }
 
   clearAllEntries() {
-    return this.http.post<Entry[]>(`${environment.apiBaseUrl}/api/clear`, JSON.parse(localStorage.getItem('statusObject'))).subscribe(
-      {
+    this.entryService.clearAll().subscribe({
         next: (values: Entry[]) => {
           console.log("clear");
           this.entries.next(values);
-          console.log(values.length);
           this.graph.clearPoints();
-        }
+        },
+        error: this.errorHandler
       }
     );
   }
-
-  getInitEntries() {
-    return this.getAll().subscribe({
-      next: (values: Entry[]) => {
-        this.entries.next(values);
-        console.log("get all init");
-        if (values.length != 0) {
-          let lastEntry = values.pop();
-          this.form.entryForm.get("r").setValue(lastEntry.r);
-          values.push(lastEntry);
-          this.graph.drawDots(lastEntry.r);
-        }
-      }
-    })
-  }
-
 }

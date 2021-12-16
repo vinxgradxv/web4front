@@ -1,8 +1,9 @@
 import {Component, OnInit} from "@angular/core";
-import {EntryService} from "../../shared/entry-util/entry.service";
+import {EntryService} from "../../shared/services/entry.service";
 import {Entry} from "../../shared/data/entry";
 import {Point} from "../../shared/data/point";
 import {StatusObject} from "../../shared/data/status-object";
+import {InteractionService} from "../../shared/services/interaction.service";
 
 @Component({
   selector: 'app-graph',
@@ -20,8 +21,8 @@ export class GraphComponent implements OnInit {
   curMissColor: string = "#f6f30a";
   otherColor: string = "#d84aee";
 
-  constructor(private entryService: EntryService) {
-    this.entryService.graph = this;
+  constructor(private interactionService: InteractionService) {
+    this.interactionService.graph = this;
   }
 
   ngOnInit() {
@@ -97,23 +98,26 @@ export class GraphComponent implements OnInit {
     }
   }
 
-  getDotCoords(event: MouseEvent) {
+  addEntry(event: MouseEvent) {
 
-    // console.log(event.offsetX, event.offsetY);
-    //     // console.log(event.target);
-    //     // console.log(event);
     let belongs = (<Element>event.target).classList.contains("svg-element");
     if (belongs) {
+      // if (this.r != null && this.entryService.form.entryForm.get("r").valid) {
       if (this.r != null) {
         let {x, y} = this.getXYCoordsFromAbsoluteOffset(event.offsetX, event.offsetY, this.r);
-        this.entryService.addEntry({
+        this.interactionService.addEntry({
           x: x,
           y: y,
           r: this.r,
           userName: (<StatusObject>JSON.parse(localStorage.getItem("statusObject"))).name
         });
+        if (this.interactionService.form.entryForm.get("r").invalid) {
+          this.interactionService.messages.clearMessages();
+          this.interactionService.form.entryForm.get("r").setValue(this.r);
+        }
       } else {
         console.log("R undefined!")
+        this.interactionService.messages.setValidationMessages(["R undefined!"]);
       }
     }
   }
@@ -122,25 +126,25 @@ export class GraphComponent implements OnInit {
   drawDots(r: number) {
     this.points = [];
     this.r = r;
-    console.log("R : "+ this.r);
-    this.entryService.entries.value.forEach((value: Entry) => {
+    console.log("R : " + this.r);
+    this.interactionService.entries.value.forEach((value: Entry) => {
       let {absoluteX, absoluteY} = this.getAbsoluteOffsetFromXYCoords(value.x, value.y, this.r);
       let fill = this.calcPointColor(value.r, this.r, value.hit);
       // this.points.push({x: value.x, y: value.y, r: value.r, hit: value.hit, cx: absoluteX, cy: absoluteY, fill: fill});
       this.points.push({x: value.x, y: value.y, cx: absoluteX, cy: absoluteY, fill: fill});
     });
   }
-    // this.points.forEach(point => {
-    //   let {absoluteX, absoluteY} = this.getAbsoluteOffsetFromXYCoords(point.x, point.y, this.r);
-    //   point.cx = absoluteX;
-    //   point.cy = absoluteY;
-    //   point.fill = this.calcPointColor(point.r, this.r, point.hit);
-    // });
+
+  // this.points.forEach(point => {
+  //   let {absoluteX, absoluteY} = this.getAbsoluteOffsetFromXYCoords(point.x, point.y, this.r);
+  //   point.cx = absoluteX;
+  //   point.cy = absoluteY;
+  //   point.fill = this.calcPointColor(point.r, this.r, point.hit);
+  // });
 
   clearPoints() {
     this.points = [];
-    this.r = this.entryService.form.entryForm.get("r").value;
-    //console.log("r " + this.r);
+    this.r = this.interactionService.form.entryForm.get("r").value;
   }
 
 

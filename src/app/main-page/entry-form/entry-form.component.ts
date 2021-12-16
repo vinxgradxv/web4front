@@ -1,8 +1,9 @@
 import {Component, OnInit} from "@angular/core";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {EntryService} from "../../shared/entry-util/entry.service";
-import {AuthService} from "../../shared/auth-util/auth.service";
+import {EntryService} from "../../shared/services/entry.service";
+import {AuthService} from "../../shared/services/auth.service";
 import {BehaviorSubject} from "rxjs";
+import {InteractionService} from "../../shared/services/interaction.service";
 
 @Component({
   selector: 'app-entry-form',
@@ -15,8 +16,12 @@ export class EntryFormComponent implements OnInit {
   submitButtonLabel: string = "Submit";
   resetButtonLabel: string = "Reset";
 
-  constructor(private entryService: EntryService) {
-    this.entryService.form = this;
+  // constructor(private entryService: EntryService) {
+  //   this.entryService.form = this;
+  // }
+
+  constructor(private interactionService: InteractionService) {
+    this.interactionService.form = this;
   }
 
   ngOnInit() {
@@ -40,28 +45,34 @@ export class EntryFormComponent implements OnInit {
 
     if (this.entryForm.valid) {
 
-      this.entryService.addEntry({
+      this.interactionService.addEntry({
         x: this.entryForm.get("x").value,
         y: this.entryForm.get("y").value,
         r: this.entryForm.get("r").value,
         userName: JSON.parse(localStorage.getItem('statusObject')).name
       });
+
     } else {
       console.log("Invalid form");
+      let messages = [
+        (this.entryForm.get("x").invalid) ? "Invalid X (X should be in [-4, 4] and not null)" : null,
+        (this.entryForm.get("y").invalid) ? "Invalid Y (Y should be in [-3, 3] and not null)" : null,
+        (this.entryForm.get("r").invalid) ? "Invalid R (R should be > 0 and not null)" : null
+      ].filter(value => value != null);
+      this.interactionService.messages.setValidationMessages(messages);
     }
   }
 
+  // xValidate(x: number) {
+  //   return true;
+  // }
 
-  xValidate(x: number) {
-    return true;
-  }
-
-  yValidate(y: number) {
-    return (y<=3) && (y>=-3);
-  }
+  // yValidate(y: number) {
+  //   return (y<=3) && (y>=-3);
+  // }
 
   rValidate(r: number) {
-    return r>0;
+    return r > 0;
   }
 
   inputFilter(event: KeyboardEvent) {
@@ -74,16 +85,23 @@ export class EntryFormComponent implements OnInit {
 
   rChanged() {
     if (this.rValidate(this.entryForm.get("r").value)) {
-      //this.entryService.graph.redrawDots(this.entryForm.get("r").value);
-      this.entryService.graph.drawDots(this.entryForm.get("r").value);
-    } else {console.log("Invalid R! Graph cannot be redrawn")}
+      this.interactionService.graph.drawDots(this.entryForm.get("r").value);
+      this.interactionService.messages.clearMessages();
+    } else {
+      console.log("Invalid R! Graph cannot be redrawn");
+      this.interactionService.messages.setValidationMessages(["Invalid R! Graph cannot be redrawn"]);
+    }
   }
 
   clearAll() {
-    this.entryService.clearAllEntries();
+    this.interactionService.clearAllEntries();
   }
 
   rMatches(item: string) {
     return this.entryForm.get('r').value == parseFloat(item);
+  }
+
+  clearMessages() {
+    this.interactionService.messages.clearMessages();
   }
 }

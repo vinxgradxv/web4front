@@ -12,9 +12,10 @@ import {TableComponent} from "./main-page/table/table.component";
 import {MainComponent} from "./main-page/main/main.component";
 import {AppRoutingModule} from "./app-routing.module";
 import {LogoutComponent} from "./main-page/logout/logout.component";
-import {EntryService} from "./shared/entry-util/entry.service";
-import {AuthService} from "./shared/auth-util/auth.service";
+import {EntryService} from "./shared/services/entry.service";
+import {AuthService} from "./shared/services/auth.service";
 import {JwtInterceptor} from "./shared/interceptors/jwt.interceptor";
+import {MessagesComponent} from "./main-page/messages/messages.component";
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import {JwtInterceptor} from "./shared/interceptors/jwt.interceptor";
     GraphComponent,
     TableComponent,
     MainComponent,
-    LogoutComponent
+    LogoutComponent,
+    MessagesComponent
 
   ],
   imports: [
