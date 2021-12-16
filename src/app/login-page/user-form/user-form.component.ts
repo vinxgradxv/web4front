@@ -24,10 +24,11 @@ export class UserFormComponent {
     "password": new FormControl(null, Validators.required),
     "register": new FormControl(false)
   });
-  loginMessage: string = "Login required!";
-  passwordMessage: string = "Password required!";
+  // loginMessage: string = "Login required!";
+  // passwordMessage: string = "Password required!";
   resultMessage: string = "Result message";
   result: boolean = false;
+  validationMessage: string = "Login and password required!";
 
   constructor(private authService: AuthService,
               private router: Router,
