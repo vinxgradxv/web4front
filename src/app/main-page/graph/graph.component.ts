@@ -19,7 +19,8 @@ export class GraphComponent implements OnInit {
 
   curHitColor: string = "#34f5e5";
   curMissColor: string = "#f6f30a";
-  otherColor: string = "#d84aee";
+  otherHitColor: string = "#d84aee";
+  otherMissColor: string = "#cb098a";
 
   constructor(private interactionService: InteractionService) {
     this.interactionService.graph = this;
@@ -34,7 +35,6 @@ export class GraphComponent implements OnInit {
       + (this.svgWidth / 2 - 0.02 * this.svgWidth) + "," + (0.0625 * this.svgHeight) + " "
       + (this.svgWidth / 2 + 0.02 * this.svgWidth) + "," + (0.0625 * this.svgHeight);
   }
-
 
   //300,120 285,126 285,114
   xAxisArrowCalc(): string {
@@ -65,21 +65,8 @@ export class GraphComponent implements OnInit {
       + (this.svgWidth / 2 - this.svgWidth / 6) + "," + (this.svgHeight / 2);
   }
 
-  // drawPoints(values: Entry[], r: number): void {
-  //   this.points = [];
-  //   this.r = r;
-  //   // console.log(r);
-  //   values.forEach((value: Entry) => {
-  //     let {absoluteX, absoluteY} = this.getAbsoluteOffsetFromXYCoords(value.x, value.y, this.r);
-  //     let fill = this.calcPointColor(value.r, this.r, value.hit);
-  //     // this.points.push({x: value.x, y: value.y, r: value.r, hit: value.hit, cx: absoluteX, cy: absoluteY, fill: fill});
-  //     this.points.push({x: value.x, y: value.y, cx: absoluteX, cy: absoluteY, fill: fill});
-  //   });
-  //   // console.log(this.points);
-  // }
-
   calcPointColor(pointR: number, currR: number, hit: boolean) {
-    return (pointR != currR) ? this.otherColor : ((hit) ? this.curHitColor : this.curMissColor);
+    return (pointR != currR) ? ((hit) ? this.otherHitColor: this.otherMissColor) : ((hit) ? this.curHitColor : this.curMissColor);
   }
 
   private getAbsoluteOffsetFromXYCoords(x, y, r) {
@@ -102,7 +89,6 @@ export class GraphComponent implements OnInit {
 
     let belongs = (<Element>event.target).classList.contains("svg-element");
     if (belongs) {
-      // if (this.r != null && this.entryService.form.entryForm.get("r").valid) {
       if (this.r != null) {
         let {x, y} = this.getXYCoordsFromAbsoluteOffset(event.offsetX, event.offsetY, this.r);
         this.interactionService.addEntry({
@@ -131,17 +117,9 @@ export class GraphComponent implements OnInit {
     this.interactionService.entries.value.forEach((value: Entry) => {
       let {absoluteX, absoluteY} = this.getAbsoluteOffsetFromXYCoords(value.x, value.y, this.r);
       let fill = this.calcPointColor(value.r, this.r, value.hit);
-      // this.points.push({x: value.x, y: value.y, r: value.r, hit: value.hit, cx: absoluteX, cy: absoluteY, fill: fill});
       this.points.push({x: value.x, y: value.y, cx: absoluteX, cy: absoluteY, fill: fill});
     });
   }
-
-  // this.points.forEach(point => {
-  //   let {absoluteX, absoluteY} = this.getAbsoluteOffsetFromXYCoords(point.x, point.y, this.r);
-  //   point.cx = absoluteX;
-  //   point.cy = absoluteY;
-  //   point.fill = this.calcPointColor(point.r, this.r, point.hit);
-  // });
 
   clearPoints() {
     this.points = [];
