@@ -17,13 +17,16 @@
 
 #graph-plane {
   /*float: right;*/
-  padding: 2rem;
+  padding: 1rem;
   margin: 1rem;
   border-radius: 1rem;
   overflow: auto;
   background-color: #370f54;
   text-align: center;
-  width: 85%;
+  max-width: 480px;
+  /*max-width: 360px;*/
+  /*display: inline-block;*/
+  /*width: 85%;*/
 }
 
 /*svg {*/

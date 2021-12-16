@@ -3,20 +3,21 @@
   margin: 1rem;
   border-radius: 1rem;
   background-color: #370f54;
+  /*width: 100%;*/
 }
 
-#table-scroll-container {
-  overflow-y: scroll;
-  min-height: 406px;
-}
+/*#table-scroll-container {*/
+/*  overflow-y: scroll;*/
+/*  min-height: 406px;*/
+/*}*/
 
 #result-table {
   width: 100%;
   text-align: center;
   border-collapse: collapse;
   border: .3rem solid #E9EFF6;
-  border-right: 0;
-  font-size: medium;
+  /*border-right: 0;*/
+  font-size: 1rem;
   font-family: 'Roboto', sans-serif;
 }
 
@@ -29,9 +30,10 @@ table tr {
   color: #E9EFF6;
 }
 
-table tbody tr:hover{
+table tbody tr:hover {
   background: #663399FF;
 }
+
 #table-header:hover th {
   background: #f69a73;
   color: #370f54;

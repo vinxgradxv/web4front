@@ -1,8 +1,8 @@
 <!--<div class="container">-->
 <!--  <div id="graph-container">-->
-    <div id="graph-plane" (click)="addEntry($event)">
+    <div id="graph-plane" >
       <svg [attr.width]="svgWidth" [attr.height]="svgHeight" id="graph-svg" class="svg-graph svg-element"
-           xmlns="http://www.w3.org/2000/svg">
+           xmlns="http://www.w3.org/2000/svg" (click)="addEntry($event)">
 
         <line class="axis svg-element" x1="0" [attr.x2]="svgWidth" [attr.y1]="svgHeight/2" [attr.y2]="svgHeight/2"/>
         <line class="axis svg-element" [attr.x1]="svgWidth/2" [attr.x2]="svgWidth/2" y1="0" [attr.y2]="svgWidth"/>

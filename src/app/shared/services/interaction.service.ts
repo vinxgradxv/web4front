@@ -7,6 +7,7 @@ import {Entry} from "../data/entry";
 import {BehaviorSubject} from "rxjs";
 import {RawEntry} from "../data/raw-entry";
 import {MessagesComponent} from "../../main-page/messages/messages.component";
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -24,10 +25,15 @@ export class InteractionService {
     console.log("Error while processing request");
     this.messages.resultMessages = ["Error while processing request"];
     this.messages.resultError = true;
-    console.log(err)
+    console.log(err);
+    if (err.status === 401) {
+      console.log("error 401!");
+      this.router.navigate(['login']);
+    }
   };
 
-  constructor(private entryService: EntryService) {
+  constructor(private entryService: EntryService,
+              private router: Router) {
   }
 
   get form(): EntryFormComponent {

@@ -1,14 +1,14 @@
-<div>
-  <div id="header">
-    <app-header></app-header>
-  </div>
-  <div id="left-area" class="floating-areas">
+<div id="header">
+  <app-header></app-header>
+</div>
+<div id="main-content">
+  <div class="input-area">
+    <app-logout></app-logout>
     <app-graph></app-graph>
+  </div>
+  <div class="input-area">
     <app-entry-form></app-entry-form>
     <app-messages></app-messages>
   </div>
-  <div id="right-area" class="floating-areas">
-    <app-table></app-table>
-    <app-logout></app-logout>
-  </div>
 </div>
+<app-table></app-table>

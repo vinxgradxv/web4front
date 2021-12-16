@@ -115,6 +115,7 @@ export class GraphComponent implements OnInit {
           this.interactionService.messages.clearMessages();
           this.interactionService.form.entryForm.get("r").setValue(this.r);
         }
+        this.interactionService.form.entryForm.get("y").setValue(y);
       } else {
         console.log("R undefined!")
         this.interactionService.messages.setValidationMessages(["R undefined!"]);

@@ -23,9 +23,12 @@
   background-color: #370f54;
   display: flex;
   flex-direction: column;
-  width: 96%;
+  /*width: 96%;*/
   overflow: auto;
+  max-width: 600px;
+  /*width: border-box;*/
 }
+
 
 .input-container {
   display: flex;
@@ -51,7 +54,7 @@
 }
 
 input, label {
-  font-size: medium;
+  font-size: .8rem;;
   font-family: 'Roboto', sans-serif;
 }
 
@@ -92,6 +95,6 @@ label {
 }
 
 /*.ng-invalid.ng-submitted  {*/
-.ng-invalid {
-  border: 3px solid #a94442; /* red */
-}
+/*.ng-invalid {*/
+/*  border: 3px solid #a94442; !* red *!*/
+/*}*/
