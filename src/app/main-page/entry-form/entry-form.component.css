@@ -1,21 +1,3 @@
-/*.container {*/
-/*  width: 100%;*/
-/*  display: flex;*/
-/*  flex-direction: row;*/
-/*  justify-content: center;*/
-/*}*/
-
-/*#entry-form-container {*/
-/*  align-items: center;*/
-/*  display: flex;*/
-/*  background-color: #663399FF;*/
-/*  width: 80%;*/
-/*  !*margin-left: 7%;*!*/
-/*  justify-content: center;*/
-/*  border-radius: 1rem;*/
-/*  border-width: .5rem;*/
-/*}*/
-
 #entry-form {
   margin: 1rem;
   padding: 2rem;
@@ -23,10 +5,8 @@
   background-color: #370f54;
   display: flex;
   flex-direction: column;
-  /*width: 96%;*/
   overflow: auto;
   max-width: 600px;
-  /*width: border-box;*/
 }
 
 
@@ -86,15 +66,9 @@ label {
 }
 
 .form-buttons:hover {
-  /*background: #d87d56;*/
   background-color: rebeccapurple;
 }
 
 .form-blocks > label {
   color: #f69a73;
 }
-
-/*.ng-invalid.ng-submitted  {*/
-/*.ng-invalid {*/
-/*  border: 3px solid #a94442; !* red *!*/
-/*}*/

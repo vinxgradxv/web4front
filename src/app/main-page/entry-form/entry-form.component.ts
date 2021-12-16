@@ -55,9 +55,9 @@ export class EntryFormComponent implements OnInit {
     } else {
       console.log("Invalid form");
       let messages = [
-        (this.entryForm.get("x").invalid) ? "Invalid X (X should be in [-4, 4] and not null)" : null,
-        (this.entryForm.get("y").invalid) ? "Invalid Y (Y should be in [-3, 3] and not null)" : null,
-        (this.entryForm.get("r").invalid) ? "Invalid R (R should be > 0 and not null)" : null
+        (this.entryForm.get("x").invalid) ? "Invalid X! (X should be in [-4, 4] and not null)" : null,
+        (this.entryForm.get("y").invalid) ? "Invalid Y! (Y should be in [-3, 3] and not null)" : null,
+        (this.entryForm.get("r").invalid) ? "Invalid R! (R should be > 0 and not null)" : null
       ].filter(value => value != null);
       this.interactionService.messages.setValidationMessages(messages);
     }

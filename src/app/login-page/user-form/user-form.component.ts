@@ -62,7 +62,7 @@ export class UserFormComponent {
               if (this.signInForm.get("register").value == true) {
                 this.resultMessage = "Registration failed: user already exists!";
               } else {
-                this.resultMessage = "Auth failed: wrong password!"
+                this.resultMessage = "Auth failed: wrong password or no such user in db!"
               }
               this.result = true;
             }
@@ -76,10 +76,6 @@ export class UserFormComponent {
       console.log("Validation failed");
     }
   }
-
-  // validateUser(user: User): boolean {
-  //   return user.login !== " "&& user.login !== null && user.password !== "" && user.password !== null;
-  // }
 
   passwordErrors() {
     let errs = this.signInForm.get('password').errors;

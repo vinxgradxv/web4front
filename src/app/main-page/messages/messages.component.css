@@ -1,2 +1,11 @@
+.message-plate {
+
+  background-color: #370f54;
+  text-align: center;
+  border:#f69a73 3px solid;
+  color:  #f6fafb;
+  margin: .5rem;
+  border-radius: 1rem;
+}
 
 
