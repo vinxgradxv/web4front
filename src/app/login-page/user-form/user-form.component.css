@@ -4,9 +4,8 @@
   justify-content: center;
 
 }
-
 #form-container {
-  margin-top: 5%;
+  margin-top: 3rem;
 }
 
 .container {
@@ -19,10 +18,10 @@
 }
 
 .text-container {
-  background-color: #f69a73;
-  border: #370f54 3px solid;
+  background-color: #370f54;
   text-align: center;
-  color: #370f54;
+  border:#f69a73 3px solid;
+  color:  #f6fafb;
   margin: .5rem;
 }
 
@@ -31,7 +30,9 @@
   margin: 1rem;
   padding: 2rem;
   background-color: #370f54;
+  border: #f69a73 3px solid;
 }
+
 
 
 .content {
@@ -81,10 +82,11 @@ input, label, p {
   background: #d87d56;
 }
 
-#message-plate {
-  background-color: #370f54;
-  text-align: center;
-  border:#f69a73 3px solid;
-  color:  #f6fafb;
-  margin: .5rem;
-}
+/*#message-plate {*/
+/*  background-color: #370f54;*/
+/*  text-align: center;*/
+/*  border:#f69a73 3px solid;*/
+/*  color:  #f6fafb;*/
+/*  margin: .5rem;*/
+
+/*}*/

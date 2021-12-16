@@ -16,6 +16,7 @@ import {EntryService} from "./shared/services/entry.service";
 import {AuthService} from "./shared/services/auth.service";
 import {JwtInterceptor} from "./shared/interceptors/jwt.interceptor";
 import {MessagesComponent} from "./main-page/messages/messages.component";
+import {AuthComponent} from "./login-page/auth/auth.component";
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import {MessagesComponent} from "./main-page/messages/messages.component";
     TableComponent,
     MainComponent,
     LogoutComponent,
-    MessagesComponent
+    MessagesComponent,
+    AuthComponent
 
   ],
   imports: [

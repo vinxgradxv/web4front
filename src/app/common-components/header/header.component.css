@@ -7,16 +7,20 @@
 
 .coloured-block {
   text-align: center;
-  background-color: #370f54;
+  /*background-color: #f69a73;*/
   padding-top: 2rem;
+  background-color: #370f54;
   padding-bottom: 2rem;
   font-size: 1.2rem;
   font-family: 'Roboto', sans-serif;
+  font-weight: bold;
+  border: 3px solid #f69a73;
 }
 
 .coloured-block > span {
-  color: #f6fafb;
+  /*color: #370f54;*/
   padding: 1rem;
+  color: #E9EFF6;
 }
 
 #head-area {
