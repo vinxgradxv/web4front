@@ -10,7 +10,7 @@ import {environment} from "../../../environments/environment";
 })
 export class AuthService {
 
-  private apiServerURL: string = environment.apiBaseUrl;
+  private apiServerURL: string = window["apiBaseUrl"];
   private statusObjectObservable: Observable<StatusObject>;
   private statusObject: BehaviorSubject<StatusObject>;
 

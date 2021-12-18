@@ -13,19 +13,21 @@ import {environment} from "../../../environments/environment";
 })
 export class EntryService {
 
+  private apiServerURL: string = window["apiBaseUrl"];
+
   constructor(private http: HttpClient) {
   }
 
   addNewEntry(entry: RawEntry) {
-    return this.http.post<Entry[]>(`${environment.apiBaseUrl}/api/add`, entry);
+    return this.http.post<Entry[]>(`${this.apiServerURL}/api/add`, entry);
   }
 
   getAll(): Observable<Entry[]> {
-    return this.http.post<Entry[]>(`${environment.apiBaseUrl}/api/get-all`, JSON.parse(localStorage.getItem('statusObject')));
+    return this.http.post<Entry[]>(`${this.apiServerURL}/api/get-all`, JSON.parse(localStorage.getItem('statusObject')));
   }
 
   clearAll(): Observable<Entry[]> {
-    return this.http.post<Entry[]>(`${environment.apiBaseUrl}/api/clear`, JSON.parse(localStorage.getItem('statusObject')));
+    return this.http.post<Entry[]>(`${this.apiServerURL}/api/clear`, JSON.parse(localStorage.getItem('statusObject')));
   }
 
 }

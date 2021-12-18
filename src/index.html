@@ -3,9 +3,14 @@
 <head>
   <meta charset="utf-8">
   <title>Web4front</title>
-  <base href="/">
+  <script>document.write('<base href="'+ document.location + '" />');</script>
+<!--  <base href="/">-->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <script type="text/javascript">
+    // window.apiBaseUrl = "http://localhost:8080";
+    window.apiBaseUrl = "http://localhost:32519/web4back-1";
+  </script>
 </head>
 <body>
   <app-root></app-root>

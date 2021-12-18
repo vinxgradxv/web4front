@@ -1,7 +1,7 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
 
-import { AppComponent } from './app.component';
+import {AppComponent} from './app.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {UserFormComponent} from "./login-page/user-form/user-form.component";
 import {HeaderComponent} from "./common-components/header/header.component";
@@ -46,7 +46,12 @@ import {AuthComponent} from "./login-page/auth/auth.component";
       provide: HTTP_INTERCEPTORS,
       useClass: JwtInterceptor,
       multi: true
-    }],
+    }
+    // {
+    //   provide: LocationStrategy,
+    //   useClass: HashLocationStrategy
+    // }
+    ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

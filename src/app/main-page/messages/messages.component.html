@@ -1,6 +1,6 @@
 <div id="validation-messages" class="message-plate" *ngIf="validationError">
   <p *ngFor="let message of validationMessages">{{message}}</p>
 </div>
-<div id="result-messages" *ngIf="resultError">
+<div id="result-messages" class="message-plate" *ngIf="resultError">
   <p *ngFor="let message of resultMessages">{{message}}</p>
 </div>
