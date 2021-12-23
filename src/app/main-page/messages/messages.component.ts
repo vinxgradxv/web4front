@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {InteractionService} from "../../shared/services/interaction.service";
 
 @Component({
@@ -6,7 +6,7 @@ import {InteractionService} from "../../shared/services/interaction.service";
   templateUrl: './messages.component.html',
   styleUrls: ['./messages.component.css']
 })
-export class MessagesComponent {
+export class MessagesComponent implements OnInit{
 
   validationError: boolean = false;
   resultError: boolean = false;
@@ -15,6 +15,10 @@ export class MessagesComponent {
 
   constructor(private interactionService: InteractionService) {
     this.interactionService.messages = this;
+  }
+
+  ngOnInit() {
+    this.clearMessages();
   }
 
   clearMessages() {

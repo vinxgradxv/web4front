@@ -82,7 +82,7 @@
         <polygon class="svg-figure triangle svg-element" [attr.points]="triangleCoordsCalc()"/>
 <!--        <polygon class="svg-figure triangle" points="150,120 250,120 150,170"/>-->
 
-        <circle class="svg-element" r="0" [attr.cx]="svgWidth/2" [attr.cy]="svgHeight/2" id="dot" fill="#866fd7"/>
+        <circle class="svg-element" [attr.r]="dotRadius" [attr.cx]="dotCx" [attr.cy]="dotCy" id="dot" fill="#866fd7"/>
 
         <circle class="svg-element" r="3" *ngFor="let point of points" [attr.cx]="point.cx" [attr.cy]="point.cy" [attr.fill]="point.fill"/>
 

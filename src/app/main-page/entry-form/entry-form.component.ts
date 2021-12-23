@@ -86,11 +86,16 @@ export class EntryFormComponent implements OnInit {
   rChanged() {
     if (this.rValidate(this.entryForm.get("r").value)) {
       this.interactionService.graph.drawDots(this.entryForm.get("r").value);
-      this.interactionService.messages.clearMessages();
+      this.drawDotAndClearMsg();
     } else {
       console.log("Invalid R! Graph cannot be redrawn");
       this.interactionService.messages.setValidationMessages(["Invalid R! Graph cannot be redrawn"]);
     }
+  }
+
+  drawDotAndClearMsg() {
+    this.clearMessages();
+    this.interactionService.graph.drawDot(this.entryForm.get("x").value, this.entryForm.get("y").value, this.entryForm.valid);
   }
 
   clearAll() {

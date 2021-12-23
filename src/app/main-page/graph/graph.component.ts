@@ -17,6 +17,10 @@ export class GraphComponent implements OnInit {
   points: Point[] = [];
   r: number;
 
+  dotRadius: number = 0;
+  dotCx: number = 0;
+  dotCy: number = 0;
+
   curHitColor: string = "#34f5e5";
   curMissColor: string = "#f6f30a";
   otherHitColor: string = "#d84aee";
@@ -66,7 +70,7 @@ export class GraphComponent implements OnInit {
   }
 
   calcPointColor(pointR: number, currR: number, hit: boolean) {
-    return (pointR != currR) ? ((hit) ? this.otherHitColor: this.otherMissColor) : ((hit) ? this.curHitColor : this.curMissColor);
+    return (pointR != currR) ? ((hit) ? this.otherHitColor : this.otherMissColor) : ((hit) ? this.curHitColor : this.curMissColor);
   }
 
   private getAbsoluteOffsetFromXYCoords(x, y, r) {
@@ -91,15 +95,20 @@ export class GraphComponent implements OnInit {
     if (belongs) {
       if (this.r != null) {
         let {x, y} = this.getXYCoordsFromAbsoluteOffset(event.offsetX, event.offsetY, this.r);
-        this.interactionService.addEntry({
-          x: x,
-          y: y,
-          r: this.r,
-          userName: (<StatusObject>JSON.parse(localStorage.getItem("statusObject"))).name
-        });
-        if (this.interactionService.form.entryForm.get("r").invalid) {
-          this.interactionService.messages.clearMessages();
-          this.interactionService.form.entryForm.get("r").setValue(this.r);
+        this.drawDot(x, y, true);
+        if (y >= -3 && y <= 3) {
+          this.interactionService.addEntry({
+            x: x,
+            y: y,
+            r: this.r,
+            userName: (<StatusObject>JSON.parse(localStorage.getItem("statusObject"))).name
+          });
+          if (this.interactionService.form.entryForm.get("r").invalid) {
+            this.interactionService.messages.clearMessages();
+            this.interactionService.form.entryForm.get("r").setValue(this.r);
+          }
+        } else {
+          this.interactionService.messages.setValidationMessages(["Y is invalid! please check restrictions"]);
         }
         this.interactionService.form.entryForm.get("y").setValue(y);
       } else {
@@ -125,6 +134,19 @@ export class GraphComponent implements OnInit {
     this.points = [];
     this.r = this.interactionService.form.entryForm.get("r").value;
   }
+
+  drawDot(x: number, y: number, valid: boolean) {
+    if (valid) {
+      let {absoluteX, absoluteY} = this.getAbsoluteOffsetFromXYCoords(x, y, this.r);
+      this.dotCx = absoluteX;
+      this.dotCy = absoluteY;
+      this.dotRadius = 3;
+    } else {
+      this.dotRadius = 0;
+    }
+  }
+
+
 
 
 }

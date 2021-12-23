@@ -23,8 +23,7 @@ export class InteractionService {
 
   private errorHandler = (err) => {
     console.log("Error while processing request");
-    this.messages.resultMessages = ["Error while processing request"];
-    this.messages.resultError = true;
+    this.messages.setResultMessages(["Error while processing request"]);
     console.log(err);
     if (err.status === 401) {
       console.log("error 401!");
