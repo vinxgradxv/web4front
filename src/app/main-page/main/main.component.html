@@ -4,10 +4,15 @@
 <div id="main-content">
   <div class="input-area">
     <app-logout></app-logout>
-    <app-graph></app-graph>
+    <app-graph (addGraphEntry)="onGraphEntryAdd($event)"
+               (validationFail)="onValidationFail($event)"></app-graph>
   </div>
   <div class="input-area">
-    <app-entry-form></app-entry-form>
+    <app-entry-form (addEntry)="onEntryAdd($event)"
+                    (validationFail)="onValidationFail($event)"
+                    (rChange)="onRChanged($event)"
+                    (clearEntries)="onEntriesClear()"
+                    (clearMessageBlock)="onMessagesClear()" (drawDot)="drawDot($event)"></app-entry-form>
     <app-messages></app-messages>
   </div>
 </div>

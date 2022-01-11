@@ -1,9 +1,6 @@
-import {Component, OnInit} from "@angular/core";
+import {Component, EventEmitter, OnInit, Output} from "@angular/core";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {EntryService} from "../../shared/services/entry.service";
-import {AuthService} from "../../shared/services/auth.service";
-import {BehaviorSubject} from "rxjs";
-import {InteractionService} from "../../shared/services/interaction.service";
+import {RawEntry} from "../../shared/data/raw-entry";
 
 @Component({
   selector: 'app-entry-form',
@@ -16,13 +13,13 @@ export class EntryFormComponent implements OnInit {
   submitButtonLabel: string = "Submit";
   resetButtonLabel: string = "Reset";
 
-  // constructor(private entryService: EntryService) {
-  //   this.entryService.form = this;
-  // }
+  @Output() addEntry = new EventEmitter<RawEntry>();
+  @Output() clearEntries = new EventEmitter<void>();
+  @Output() clearMessageBlock = new EventEmitter<void>();
+  @Output() validationFail = new EventEmitter<string[]>();
+  @Output() rChange = new EventEmitter<number>();
+  @Output() drawDot = new EventEmitter<any>();
 
-  constructor(private interactionService: InteractionService) {
-    this.interactionService.form = this;
-  }
 
   ngOnInit() {
   }
@@ -45,7 +42,7 @@ export class EntryFormComponent implements OnInit {
 
     if (this.entryForm.valid) {
 
-      this.interactionService.addEntry({
+      this.addEntry.emit({
         x: this.entryForm.get("x").value,
         y: this.entryForm.get("y").value,
         r: this.entryForm.get("r").value,
@@ -59,17 +56,10 @@ export class EntryFormComponent implements OnInit {
         (this.entryForm.get("y").invalid) ? "Invalid Y! (Y should be in [-3, 3] and not null)" : null,
         (this.entryForm.get("r").invalid) ? "Invalid R! (R should be > 0 and not null)" : null
       ].filter(value => value != null);
-      this.interactionService.messages.setValidationMessages(messages);
+      this.validationFail.emit(messages);
     }
+
   }
-
-  // xValidate(x: number) {
-  //   return true;
-  // }
-
-  // yValidate(y: number) {
-  //   return (y<=3) && (y>=-3);
-  // }
 
   rValidate(r: number) {
     return r > 0;
@@ -85,21 +75,15 @@ export class EntryFormComponent implements OnInit {
 
   rChanged() {
     if (this.rValidate(this.entryForm.get("r").value)) {
-      this.interactionService.graph.drawDots(this.entryForm.get("r").value);
-      this.drawDotAndClearMsg();
+      this.rChange.emit(this.entryForm.get("r").value);
     } else {
       console.log("Invalid R! Graph cannot be redrawn");
-      this.interactionService.messages.setValidationMessages(["Invalid R! Graph cannot be redrawn"]);
+      this.validationFail.emit(["Invalid R! Graph cannot be redrawn"]);
     }
   }
 
-  drawDotAndClearMsg() {
-    this.clearMessages();
-    this.interactionService.graph.drawDot(this.entryForm.get("x").value, this.entryForm.get("y").value, this.entryForm.valid);
-  }
-
   clearAll() {
-    this.interactionService.clearAllEntries();
+    this.clearEntries.emit();
   }
 
   rMatches(item: string) {
@@ -107,6 +91,19 @@ export class EntryFormComponent implements OnInit {
   }
 
   clearMessages() {
-    this.interactionService.messages.clearMessages();
+    this.clearMessageBlock.emit();
   }
+
+  drawDotAndClearMsg() {
+    this.clearMessages();
+    this.drawDot.emit(
+      {
+        x: this.entryForm.get("x").value,
+        y: this.entryForm.get("y").value,
+        valid: this.entryForm.valid
+      }
+    );
+    // this.interactionService.graph.drawDot(this.entryForm.get("x").value, this.entryForm.get("y").value, this.entryForm.valid);
+  }
+
 }

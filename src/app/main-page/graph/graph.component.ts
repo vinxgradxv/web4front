@@ -1,9 +1,8 @@
-import {Component, OnInit} from "@angular/core";
-import {EntryService} from "../../shared/services/entry.service";
+import {Component, EventEmitter, OnInit, Output} from "@angular/core";
 import {Entry} from "../../shared/data/entry";
 import {Point} from "../../shared/data/point";
 import {StatusObject} from "../../shared/data/status-object";
-import {InteractionService} from "../../shared/services/interaction.service";
+import {RawEntry} from "../../shared/data/raw-entry";
 
 @Component({
   selector: 'app-graph',
@@ -26,9 +25,8 @@ export class GraphComponent implements OnInit {
   otherHitColor: string = "#d84aee";
   otherMissColor: string = "#cb098a";
 
-  constructor(private interactionService: InteractionService) {
-    this.interactionService.graph = this;
-  }
+  @Output() validationFail = new EventEmitter<string[]>();
+  @Output() addGraphEntry = new EventEmitter<RawEntry>();
 
   ngOnInit() {
   }
@@ -89,50 +87,43 @@ export class GraphComponent implements OnInit {
     }
   }
 
+
   addEntry(event: MouseEvent) {
 
     let belongs = (<Element>event.target).classList.contains("svg-element");
     if (belongs) {
       if (this.r != null) {
         let {x, y} = this.getXYCoordsFromAbsoluteOffset(event.offsetX, event.offsetY, this.r);
-        this.drawDot(x, y, true);
-        if (y >= -3 && y <= 3) {
-          this.interactionService.addEntry({
-            x: x,
-            y: y,
-            r: this.r,
-            userName: (<StatusObject>JSON.parse(localStorage.getItem("statusObject"))).name
-          });
-          if (this.interactionService.form.entryForm.get("r").invalid) {
-            this.interactionService.messages.clearMessages();
-            this.interactionService.form.entryForm.get("r").setValue(this.r);
-          }
-        } else {
-          this.interactionService.messages.setValidationMessages(["Y is invalid! please check restrictions"]);
-        }
-        this.interactionService.form.entryForm.get("y").setValue(y);
+
+        this.addGraphEntry.emit({
+          x: x,
+          y: y,
+          r: this.r,
+          userName: (<StatusObject>JSON.parse(localStorage.getItem("statusObject"))).name
+        });
+
       } else {
-        console.log("R undefined!")
-        this.interactionService.messages.setValidationMessages(["R undefined!"]);
+        console.log("R undefined!");
+        this.validationFail.emit(["R undefined!"]);
       }
     }
   }
 
 
-  drawDots(r: number) {
+  drawDots(r: number, entries: Entry[]) {
     this.points = [];
     this.r = r;
     console.log("R : " + this.r);
-    this.interactionService.entries.value.forEach((value: Entry) => {
+    entries.forEach((value: Entry) => {
       let {absoluteX, absoluteY} = this.getAbsoluteOffsetFromXYCoords(value.x, value.y, this.r);
       let fill = this.calcPointColor(value.r, this.r, value.hit);
       this.points.push({x: value.x, y: value.y, cx: absoluteX, cy: absoluteY, fill: fill});
     });
   }
 
-  clearPoints() {
+  clearPoints(newR: number) {
     this.points = [];
-    this.r = this.interactionService.form.entryForm.get("r").value;
+    this.r = newR;
   }
 
   drawDot(x: number, y: number, valid: boolean) {

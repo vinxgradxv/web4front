@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {InteractionService} from "../../shared/services/interaction.service";
 
 @Component({
   selector: 'app-messages',
@@ -12,10 +11,6 @@ export class MessagesComponent implements OnInit{
   resultError: boolean = false;
   validationMessages: string[] = [];
   resultMessages: string[] = [];
-
-  constructor(private interactionService: InteractionService) {
-    this.interactionService.messages = this;
-  }
 
   ngOnInit() {
     this.clearMessages();
