@@ -7,6 +7,8 @@ import {Entry} from "../../shared/data/entry";
   styleUrls: ['./table.component.css']
 })
 export class TableComponent {
+  initTimeColumnLabel = "Init time";
+  execTimeColumnLabel = "Execution Time";
   xColumnLabel: string = "X";
   yColumnLabel: string = "Y";
   rColumnLabel: string = "R";

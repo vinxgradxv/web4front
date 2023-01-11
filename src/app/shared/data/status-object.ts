@@ -1,5 +1,5 @@
 export interface StatusObject {
-  name: string;
-  success: boolean
-  token: string
+  username: string;
+  password: string
+  status: boolean
 }

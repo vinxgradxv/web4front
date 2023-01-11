@@ -1,5 +1,5 @@
 <div class="flex-container container" id="form-container">
-  <form id="user-form" class="content" [formGroup]="signInForm" (ngSubmit)="onSubmit()">
+  <form id="user-form" class="content" [formGroup]="signInForm">
     <input type="text"
            [placeholder]="loginPlaceholder"
            (input)="touchField()"
@@ -10,18 +10,14 @@
            (input)="touchField()"
            formControlName="password">
 
-    <div class="input-container">
-      <input type="checkbox"
-             id="register-check"
-             formControlName="register">
-      <label for="register-check" class="form-label">{{registerLabel}}</label>
-    </div>
     <input type="submit"
-           [value]="submitButtonLabel">
+           [value]="logInButtonLabel" (click)="onLogInSubmit()">
+    <input type="submit"
+           [value]="signUpButtonLabel" (click)="onSignUpSubmit()">
   </form>
 </div>
 
-<div class="flex-container container" *ngIf="(loginErrors() || passwordErrors()) && submitted">
+<div class="flex-container container" *ngIf="((loginErrors() || passwordErrors()) && submitted) || requestFail">
   <div class="text-container content">
     <p>{{validationMessage}}</p>
   </div>

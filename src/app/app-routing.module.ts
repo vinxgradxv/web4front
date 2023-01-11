@@ -5,13 +5,14 @@ import {MainComponent} from "./main-page/main/main.component";
 import {AuthComponent} from "./login-page/auth/auth.component";
 
 const routes: Routes = [
-  { path: '', component: MainComponent, canActivate: [AuthGuard] },
+  { path: 'main', component: MainComponent, canActivate: [AuthGuard]},
   { path: 'login', component: AuthComponent },
-  { path: '**', redirectTo: '' }
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: '**', redirectTo: '/login'}
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes,{ useHash: true })],
+  imports: [RouterModule.forRoot(routes,{ useHash: true, enableTracing: true })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

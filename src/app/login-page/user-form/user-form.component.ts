@@ -15,17 +15,15 @@ export class UserFormComponent {
 
   loginPlaceholder: string = "Login";
   passwordPlaceholder: string = "Password";
-  registerLabel: string = "register";
-  submitButtonLabel: string = "Submit";
+  signUpButtonLabel: string = "Sign Up";
+  logInButtonLabel: string = "Log In";
   submitted: boolean = false;
+  requestFail: boolean = false;
 
   signInForm: FormGroup = new FormGroup({
     "login": new FormControl(null, Validators.required),
-    "password": new FormControl(null, Validators.required),
-    "register": new FormControl(false)
+    "password": new FormControl(null, Validators.compose([Validators.required, Validators.minLength(5)])),
   });
-  // loginMessage: string = "Login required!";
-  // passwordMessage: string = "Password required!";
   resultMessage: string = "Result message";
   result: boolean = false;
   validationMessage: string = "Login and password required!";
@@ -33,43 +31,44 @@ export class UserFormComponent {
   constructor(private authService: AuthService,
               private router: Router,
               private route: ActivatedRoute) {
-
-    // if (this.authService.getStatusObject && this.authService.getStatusObject.success) {
-    //   this.router.navigate(['/']);
-    // }
   }
 
-  onSubmit(): void {
+  onLogInSubmit(): void {
+    this.onSubmit(false);
+  }
 
+  onSignUpSubmit(): void {
+    this.onSubmit(true);
+  }
 
-
-    // console.log(user);
+  onSubmit(register: boolean): void {
+    this.requestFail = false;
     this.submitted = true;
     console.log(this.signInForm);
-    // if (this.validateUser(user)) {
     if (this.signInForm.valid) {
       let user: User = {
         "login": this.signInForm.get("login").value,
         "password": this.signInForm.get("password").value
       }
-      let so: Observable<StatusObject> = this.authService.logIn(user, this.signInForm.get("register").value);
+      let so: Observable<StatusObject> = this.authService.logIn(user, register);
       so.subscribe({
           next: (response: StatusObject) => {
-            console.log(response)
-            if (response.success) {
-              const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
-              this.router.navigate([returnUrl]);
-            } else {
-              if (this.signInForm.get("register").value == true) {
-                this.resultMessage = "Registration failed: user already exists!";
-              } else {
-                this.resultMessage = "Auth failed: wrong password or no such user in db!"
-              }
-              this.result = true;
+            console.log("все хорошо!!!");
+            console.log(response);
+            this.result = true;
+            if (response.status) {
+              this.router.navigate(["/main"]);
             }
           },
           error: (error: any) => {
-            console.log(error)
+            console.log("ошибка!!!");
+              if (register == true) {
+                this.validationMessage = "Registration failed: user already exists!";
+                this.requestFail = true;
+              } else {
+                this.validationMessage = "Auth failed: wrong password or no such user in db!";
+                this.requestFail = true;
+              }
           }
         }
       );
@@ -79,14 +78,24 @@ export class UserFormComponent {
   }
 
   passwordErrors() {
-    let errs = this.signInForm.get('password').errors;
-    if (errs) return true;
+    let errs = this.signInForm.get('password');
+    if (errs.hasError("minlength")){
+      this.validationMessage = "password minimum length is 5!"
+      return true;
+    }
+    if (errs.hasError("required")){
+      this.validationMessage = "Login and password required!"
+      return true;
+    }
     return false;
   }
 
   loginErrors() {
     let errs = this.signInForm.get('login').errors;
-    if (errs) return true;
+    if (errs) {
+      this.validationMessage = "Login and password required!";
+      return true;
+    }
     return false;
   }
 
@@ -94,5 +103,4 @@ export class UserFormComponent {
     this.submitted = false;
     this.result = false;
   }
-
 }

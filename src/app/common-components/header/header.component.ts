@@ -7,7 +7,7 @@ import {AuthService} from "../../shared/services/auth.service";
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
-  name: string = "Sofya Inglikova";
-  group: string = "P3233";
-  varNum: number = 3356;
+  name: string = "Gleb Vinogradov";
+  group: string = "P32111";
+  varNum: number = 11118;
 }

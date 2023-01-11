@@ -1,45 +1,19 @@
-/*.container {*/
-/*  width: 100%;*/
-/*  display: flex;*/
-/*  flex-direction: row;*/
-/*  justify-content: center;*/
-/*}*/
-
-/*#graph-container {*/
-/*  align-items: center;*/
-/*  display: flex;*/
-/*  background-color: #663399FF;*/
-/*  width: 80%;*/
-/*  justify-content: center;*/
-/*  border-radius: 1rem;*/
-/*  border-width: .5rem;*/
-/*}*/
-
 #graph-plane {
-  /*float: right;*/
   padding: 1rem;
   margin: 1rem;
   border-radius: 1rem;
   overflow: auto;
-  background-color: #370f54;
+  background-color: white;
   text-align: center;
-  max-width: 480px;
-  /*max-width: 360px;*/
-  /*display: inline-block;*/
-  /*width: 85%;*/
+  max-width: 1000px;
 }
 
-/*svg {*/
-/*  background-color: #370f54;*/
-/*  border-radius: 1rem;*/
-/*}*/
-
 svg text {
-  fill: #E9EFF6;
+  fill: black;
 }
 
 svg line {
-  stroke: #E9EFF6;
+  stroke: black;
 }
 
 svg path, svg polygon {
@@ -49,7 +23,7 @@ svg path, svg polygon {
 }
 
 svg polygon.axis-arrows {
-  fill: #E9EFF6;
-  stroke: #E9EFF6;
+  fill: gray;
+  stroke: black;
 }
 

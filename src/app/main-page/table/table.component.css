@@ -2,20 +2,20 @@
   padding: 1rem;
   margin: 1rem;
   border-radius: 1rem;
-  background-color: #370f54;
+  background-color: dimgray;
 }
 
 #result-table {
   width: 100%;
   text-align: center;
   border-collapse: collapse;
-  border: .3rem solid #E9EFF6;
+  border: .3rem solid lightgray;
   font-size: 1rem;
   font-family: 'Roboto', sans-serif;
 }
 
 table th {
-  color: #f69a73;
+  color: white;
   font-size: large;
 }
 
@@ -24,10 +24,8 @@ table tr {
 }
 
 table tbody tr:hover {
-  background: #663399FF;
+  background: white;
+  color: black;
 }
 
-#table-header:hover th {
-  background: #f69a73;
-  color: #370f54;
-}
+

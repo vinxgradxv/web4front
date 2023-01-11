@@ -77,6 +77,7 @@ export class MainComponent {
       this.formComponent.entryForm.get("r").setValue($event.r);
     }
     this.formComponent.entryForm.get("y").setValue($event.y);
+    this.formComponent.entryForm.get("x").setValue($event.x);
   }
 
 
@@ -86,13 +87,16 @@ export class MainComponent {
       {
         next: (values: Entry[]) => {
           values = values.sort((res1, res2) => res1.id - res2.id);
+          for (let value of values) {
+            value.date = this.makeDateLocal(value.date);
+          }
           this.entries.next(values);
-          console.log("get all");
           if (values.length != 0) {
+            console.log("get all");
             let lastEntry = values.pop();
             values.push(lastEntry);
-            this.formComponent.entryForm.get("r").setValue(lastEntry.r);
-            this.graphComponent.drawDots(lastEntry.r, this.entries.value);
+            this.formComponent.entryForm.get("r").setValue(1);
+            this.graphComponent.drawDots(1, this.entries.value);
           }
         },
         error: this.errorHandler
@@ -104,11 +108,16 @@ export class MainComponent {
     this.entryService.addNewEntry(entry).subscribe(
       {
         next: (values: Entry[]) => {
+          console.log("NO error");
           values = values.sort((res1, res2) => res1.id - res2.id);
+          for (let value of values) {
+            value.date = this.makeDateLocal(value.date);
+          }
           this.entries.next(values);
           if (values.length != 0) {
             let lastEntry = values.pop();
             values.push(lastEntry);
+            console.log(lastEntry);
             this.graphComponent.drawDots(lastEntry.r, this.entries.value);
           }
         },
@@ -131,5 +140,21 @@ export class MainComponent {
 
   drawDot($event: any) {
     this.graphComponent.drawDot($event.x, $event.y, $event.valid);
+  }
+
+  makeDateLocal(date: string) {
+    const serverDate = new Date(date);
+    const serverHours = serverDate.getHours();
+    const serverMinutes = serverDate.getMinutes();
+    const serverSeconds = serverDate.getSeconds();
+    const offset = new Date().getTimezoneOffset() + 180;
+    const localSeconds = serverSeconds;
+    const localMinutes = (serverMinutes - offset) % 60;
+    const localHours = (serverHours + (serverMinutes - offset) / 60) % 24;
+    let localDate = new Date();
+    localDate.setSeconds(localSeconds);
+    localDate.setMinutes(localMinutes);
+    localDate.setHours(localHours);
+    return localDate.toLocaleTimeString();
   }
 }

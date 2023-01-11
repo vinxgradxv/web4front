@@ -9,14 +9,15 @@ import {AuthService} from "../../shared/services/auth.service";
 })
 export class LogoutComponent {
 
-  userName: string;
+  username: string;
   logOutLabel: string = "Log out";
 
   constructor(
     private router: Router,
     private authenticationService: AuthService
   ) {
-    this.userName = authenticationService.getStatusObject.name;
+    console.log(JSON.parse(sessionStorage.getItem('statusObject')).login);
+    this.username = JSON.parse(sessionStorage.getItem('statusObject')).login;
   }
 
   logout() {

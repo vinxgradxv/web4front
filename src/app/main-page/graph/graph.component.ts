@@ -20,10 +20,8 @@ export class GraphComponent implements OnInit {
   dotCx: number = 0;
   dotCy: number = 0;
 
-  curHitColor: string = "#34f5e5";
-  curMissColor: string = "#f6f30a";
-  otherHitColor: string = "#d84aee";
-  otherMissColor: string = "#cb098a";
+  HitColor: string = "green";
+  MissColor: string = "red";
 
   @Output() validationFail = new EventEmitter<string[]>();
   @Output() addGraphEntry = new EventEmitter<RawEntry>();
@@ -32,13 +30,11 @@ export class GraphComponent implements OnInit {
   }
 
   yAxisArrowCalc(): string {
-    //arrow scaling
     return "" + (this.svgWidth / 2) + "," + "0" + " "
       + (this.svgWidth / 2 - 0.02 * this.svgWidth) + "," + (0.0625 * this.svgHeight) + " "
       + (this.svgWidth / 2 + 0.02 * this.svgWidth) + "," + (0.0625 * this.svgHeight);
   }
 
-  //300,120 285,126 285,114
   xAxisArrowCalc(): string {
     //arrow scaling
     return "" + (this.svgWidth) + "," + (this.svgHeight / 2) + " "
@@ -49,27 +45,22 @@ export class GraphComponent implements OnInit {
   rectangleCoordsCalc(): string {
     return "" + (this.svgWidth / 2) + "," + (this.svgHeight / 2) + " "
       + (this.svgWidth / 2 - 2 * this.svgWidth / 6) + "," + (this.svgHeight / 2) + " "
-      + (this.svgWidth / 2 - 2 * this.svgWidth / 6) + "," + (this.svgHeight / 2 - 2 * this.svgWidth / 6) + " "
-      + (this.svgWidth / 2) + "," + (this.svgHeight / 2 - 2 * this.svgWidth / 6);
+      + (this.svgWidth / 2 - 2 * this.svgWidth / 6) + "," + (this.svgHeight / 2 - this.svgWidth / 6) + " "
+      + (this.svgWidth / 2) + "," + (this.svgHeight / 2 - this.svgWidth / 6);
   }
 
-  //"M 150 70 A 50 50 0 0 1 200 120 V 120 H 150"
   circleCoordsCalc(): string {
     return "M " + (this.svgWidth / 2) + " " + (this.svgHeight / 2 - this.svgWidth / 6)
       + " A 50 50 0 0 1 " + (4 * this.svgWidth / 6) + " " + (this.svgHeight / 2)
       + " V " + (this.svgHeight / 2) + " H " + (this.svgWidth / 2);
   }
 
-  //150,120 250,120 150,170
   triangleCoordsCalc(): string {
     return "" + (this.svgWidth / 2) + "," + (this.svgHeight / 2) + " "
       + (this.svgWidth / 2) + "," + (this.svgHeight / 2 + this.svgWidth / 6) + " "
-      + (this.svgWidth / 2 - this.svgWidth / 6) + "," + (this.svgHeight / 2);
+      + (this.svgWidth / 2 - this.svgWidth / 3) + "," + (this.svgHeight / 2);
   }
 
-  calcPointColor(pointR: number, currR: number, hit: boolean) {
-    return (pointR != currR) ? ((hit) ? this.otherHitColor : this.otherMissColor) : ((hit) ? this.curHitColor : this.curMissColor);
-  }
 
   private getAbsoluteOffsetFromXYCoords(x, y, r) {
     let relativeX = x * 100 / r;
@@ -94,12 +85,13 @@ export class GraphComponent implements OnInit {
     if (belongs) {
       if (this.r != null) {
         let {x, y} = this.getXYCoordsFromAbsoluteOffset(event.offsetX, event.offsetY, this.r);
-
+        console.log(JSON.parse(sessionStorage.getItem("statusObject")));
         this.addGraphEntry.emit({
           x: x,
           y: y,
           r: this.r,
-          userName: (<StatusObject>JSON.parse(localStorage.getItem("statusObject"))).name
+          username: JSON.parse(sessionStorage.getItem('statusObject')).username,
+          userPassword: JSON.parse(sessionStorage.getItem('statusObject')).password
         });
 
       } else {
@@ -114,9 +106,10 @@ export class GraphComponent implements OnInit {
     this.points = [];
     this.r = r;
     console.log("R : " + this.r);
+    console.log(entries);
     entries.forEach((value: Entry) => {
       let {absoluteX, absoluteY} = this.getAbsoluteOffsetFromXYCoords(value.x, value.y, this.r);
-      let fill = this.calcPointColor(value.r, this.r, value.hit);
+      let fill = this.isHit(value.x, value.y, this.r) ? this.HitColor : this.MissColor;
       this.points.push({x: value.x, y: value.y, cx: absoluteX, cy: absoluteY, fill: fill});
     });
   }
@@ -137,7 +130,23 @@ export class GraphComponent implements OnInit {
     }
   }
 
+  isTopRight(x, y, r){
+    return x >= 0 && y >= 0 && (x * x + y * y <= r*r/4);
+  }
 
+  isBottomLeft(x, y, r){
+    return x <= 0 && y <= 0 && x >= -r && y >= - x / 2 - r / 2;
+  }
 
+  isTopLeft(x, y, r){
+    return x <= 0 && x >= -r && y >= 0 && y <= r / 2;
+  }
+
+  isHit(x, y, r){
+    console.log(this.isTopLeft(x, y, r));
+    console.log(this.isTopRight(x, y, r));
+    console.log(this.isBottomLeft(x, y, r));
+    return this.isTopLeft(x, y, r) || this.isTopRight(x, y, r) || this.isBottomLeft(x, y, r);
+  }
 
 }

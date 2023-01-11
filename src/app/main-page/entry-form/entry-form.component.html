@@ -1,38 +1,25 @@
-<!--<div class="container">-->
-<!--  <div id="entry-form-container">-->
-    <form id="entry-form" [formGroup]="entryForm" (ngSubmit)="onSubmit()">
+ <form id="entry-form" [formGroup]="entryForm" (ngSubmit)="onSubmit()">
 
       <div id="x-block" class="form-blocks">
-        <label for="x-group">X</label>
-        <div id="x-group" class="radio-container">
-          <ng-template ngFor let-item [ngForOf]="x_r_values">
-            <div>
-              <input type="radio" value={{item}} name="x" formControlName="x" id="x{{item}}" (change)="drawDotAndClearMsg()">
-              <label for="x{{item}}">{{item}}</label>
-            </div>
-          </ng-template>
-        </div>
+        <input type="text" (keydown)="inputFilter($event)" maxLength="10"
+               formControlName="x"
+               [placeholder]="xPlaceholder">
       </div>
 
       <div id="y-block" class="form-blocks">
-        <input type="text" (keydown)="inputFilter($event)"
+        <input type="text" (keydown)="inputFilter($event)" maxLength="10"
                formControlName="y"
-               (input)="drawDotAndClearMsg()"
                [placeholder]="yPlaceholder">
       </div>
 
       <div id="r-block" class="form-blocks">
-        <label for="r-group">R</label>
-        <div id="r-group" class="radio-container">
-          <ng-template ngFor let-item [ngForOf]="x_r_values">
-            <div>
-              <input type="radio" value={{item}} name="r" formControlName="r" id="r{{item}}" (change)="rChanged()"
-                     [checked]="rMatches(item)">
-              <label for="r{{item}}">{{item}}</label>
-            </div>
-          </ng-template>
-        </div>
+        <input #rVar type="text" (keydown)="inputFilter($event)" maxLength="10"
+               formControlName="r"
+               (input)="rChanged()"
+               [placeholder]="rPlaceholder">
       </div>
+
+
 
       <div id="button-block" class="form-blocks">
         <input type="submit" class="form-buttons" id="submit-button"
@@ -41,6 +28,4 @@
                [value]="resetButtonLabel" (click)="clearAll()">
       </div>
     </form>
-<!--  </div>-->
 
-<!--</div>-->

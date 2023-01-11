@@ -1,0 +1,6 @@
+{
+  "/backend_web4-1.0-SNAPSHOT/app/registration": {
+    "target": "http://localhost:8080",
+    "secure": false
+  }
+}

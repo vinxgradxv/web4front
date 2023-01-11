@@ -2,11 +2,11 @@
   margin: 1rem;
   padding: 2rem;
   border-radius: 1rem;
-  background-color: #370f54;
+  background-color: darkgray;
   display: flex;
   flex-direction: column;
   overflow: auto;
-  max-width: 600px;
+  max-width: 1000px;
 }
 
 
@@ -60,15 +60,15 @@ label {
 
 .form-buttons {
   margin-top: .6rem;
-  background: #f69a73;
+  background: darkolivegreen;
   color:  #f6fafb;
   width: 40%;
 }
 
 .form-buttons:hover {
-  background-color: rebeccapurple;
+  background-color: seagreen;
 }
 
 .form-blocks > label {
-  color: #f69a73;
+  color: white;
 }

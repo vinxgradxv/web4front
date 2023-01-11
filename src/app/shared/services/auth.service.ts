@@ -13,9 +13,19 @@ export class AuthService {
   private apiServerURL: string = window["apiBaseUrl"];
   private statusObjectObservable: Observable<StatusObject>;
   private statusObject: BehaviorSubject<StatusObject>;
+  private stObj: string = "    {\n" +
+    "   \"login\": \"" + "test" + "\",\n" +
+    "   \"password\": \"" + "testtest" + "\",\n" +
+    "   \"status\": \"" + false + "\"\n" +
+    "   }";
 
   constructor(private http: HttpClient) {
-    this.statusObject = new BehaviorSubject<StatusObject>(JSON.parse(localStorage.getItem('statusObject')));
+    try {
+      this.statusObject = new BehaviorSubject<StatusObject>(JSON.parse(sessionStorage.getItem('statusObject')));
+    }
+    catch (SyntaxError) {
+      this.statusObject = new BehaviorSubject<StatusObject>(JSON.parse(this.stObj));
+    }
     this.statusObjectObservable = this.statusObject.asObservable();
   }
 
@@ -28,14 +38,14 @@ export class AuthService {
   }
 
   sendSignInRequest(user: User, register: boolean): Observable<StatusObject> {
-    if (register) return this.http.post<StatusObject>(`${this.apiServerURL}/user/register`, user);
-    return this.http.post<StatusObject>(`${this.apiServerURL}/user/auth`, user);
+    if (register) return this.http.post<StatusObject>(`${this.apiServerURL}/signup`, user);
+    return this.http.post<StatusObject>(`${this.apiServerURL}/signin`, user);
   }
 
   logIn(user: User, register: boolean) {
     let result: Observable<StatusObject> = this.sendSignInRequest(user, register);
     return result.pipe(map(statusObj => {
-      localStorage.setItem("statusObject", JSON.stringify(statusObj));
+      sessionStorage.setItem("statusObject", JSON.stringify(statusObj));
       this.statusObject.next(statusObj);
       return statusObj;
     }));
@@ -43,7 +53,7 @@ export class AuthService {
 
     logOut() {
       console.log("Logout...");
-      localStorage.removeItem('statusObject');
+      sessionStorage.removeItem('statusObject');
       this.statusObject.next(null);
     }
 

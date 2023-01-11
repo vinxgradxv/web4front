@@ -1,4 +1,8 @@
+* {
+  background-color: lightgray;
+}
+
 #form-plate {
-  background-color: #370f54;
+  background-color: lightgray;
   border-radius: 1rem;
 }

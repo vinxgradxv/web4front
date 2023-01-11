@@ -1,8 +1,9 @@
 <div id="table-container">
-<!--  <div id="table-scroll-container">-->
     <table id="result-table">
       <thead>
       <tr id="table-header">
+        <th class="coords-col">{{initTimeColumnLabel}}</th>
+        <th class="coords-col">{{execTimeColumnLabel}}</th>
         <th class="coords-col">{{xColumnLabel}}</th>
         <th class="coords-col">{{yColumnLabel}}</th>
         <th class="coords-col">{{rColumnLabel}}</th>
@@ -11,12 +12,13 @@
       </thead>
       <tbody>
       <tr *ngFor="let entry of entries">
+        <td>{{entry.date}}</td>
+        <td>{{entry.script_time}}</td>
         <td>{{entry.x}}</td>
         <td>{{entry.y}}</td>
         <td>{{entry.r}}</td>
-        <td>{{entry.hit}}</td>
+        <td>{{entry.status}}</td>
       </tr>
       </tbody>
     </table>
-<!--  </div>-->
 </div>

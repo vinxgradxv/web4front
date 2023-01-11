@@ -2,5 +2,6 @@ export interface RawEntry {
   x:number,
   y:number,
   r:number,
-  userName:string
+  username:string,
+  userPassword:string
 }
